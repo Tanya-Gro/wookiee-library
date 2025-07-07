@@ -35,6 +35,13 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+
+      '@typescript-eslint/explicit-function-return-type': 'warn', // Disallow unused expressions (e.g. unnecessary calls that don't make sense)
+
+      'prefer-const': 'warn', // Better const than let
+      'no-console': ['warn', { allow: ['warn', 'error'] }], // Disallow console.
+      eqeqeq: ['error', 'always'], // Allow only strict comparison
+      'no-empty': 'warn', // No empty blocks
     },
     settings: {
       react: {
