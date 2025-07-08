@@ -1,3 +1,17 @@
+:root {
+  --primary-color: rgb(20, 44, 97);
+}
+
 * {
   box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+.wrapper {
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
 }
