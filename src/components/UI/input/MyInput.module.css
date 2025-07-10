@@ -5,3 +5,15 @@
   width: 50%;
   font-size: 1.4rem;
 }
+
+.paginate_input {
+  border: 1px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  margin: 0 15px;
+  width: 110px;
+  font-size: 1.4rem;
+  text-align: center;
+  color: var(--primary-color);
+  user-select: none;
+}

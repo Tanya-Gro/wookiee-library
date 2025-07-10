@@ -6,14 +6,20 @@ type MyInputProps = {
   type: string;
   name: string;
   value: string;
+  className: string;
+  disabled?: boolean;
 };
 
 class MyInput extends Component<MyInputProps> {
   render(): ReactNode {
-    const { onChange, ...props } = this.props;
+    const { onChange, className, ...props } = this.props;
 
     return (
-      <input {...props} className={styles.my_input} onChange={onChange}></input>
+      <input
+        {...props}
+        className={styles[className]}
+        onChange={onChange}
+      ></input>
     );
   }
 }
