@@ -36,12 +36,20 @@ export default tseslint.config(
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
 
-      '@typescript-eslint/explicit-function-return-type': 'warn', // Disallow unused expressions (e.g. unnecessary calls that don't make sense)
+      '@typescript-eslint/explicit-function-return-type': 'warn',
+      '@typescript-eslint/explicit-module-boundary-types': 'warn',
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/no-non-null-assertion': 'error',
+      '@typescript-eslint/consistent-type-assertions': [
+        'error',
+        { assertionStyle: 'never' },
+      ],
+      '@typescript-eslint/consistent-indexed-object-style': 'error',
 
-      'prefer-const': 'warn', // Better const than let
-      'no-console': ['warn', { allow: ['warn', 'error'] }], // Disallow console.
-      eqeqeq: ['error', 'always'], // Allow only strict comparison
-      'no-empty': 'warn', // No empty blocks
+      'prefer-const': 'warn',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      eqeqeq: ['error', 'always'],
+      'no-empty': 'off',
     },
     settings: {
       react: {
