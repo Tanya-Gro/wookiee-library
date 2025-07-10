@@ -2,25 +2,38 @@ import { Component, type ReactNode } from 'react';
 import MyButton from './UI/button/MyButton';
 import MyInput from './UI/input/MyInput';
 
-type MySearchFormProps = {
+type SearchFormProps = {
   searchQuery: string;
   onSearchQueryChange: (searchQuery: string) => void;
+  updatePagesCount: (count: number) => void;
 };
 
-export default class SearchForm extends Component<MySearchFormProps> {
+type SearchFormState = {
+  searchQuery: string;
+};
+
+export default class SearchForm extends Component<
+  SearchFormProps,
+  SearchFormState
+> {
+  state = {
+    searchQuery: this.props.searchQuery,
+  };
+
   render(): ReactNode {
     return (
       <div className="wrapper">
         <MyInput
           type="text"
-          value={this.props.searchQuery}
+          value={this.state.searchQuery}
           name="SearchInput"
+          className="my_input"
           onChange={(e): void => {
-            this.props.onSearchQueryChange(e.target.value);
+            this.setState({ searchQuery: e.target.value });
           }}
         />
         <MyButton
-          onClick={() => console.log('looking for:', this.props.searchQuery)}
+          onClick={() => this.props.onSearchQueryChange(this.state.searchQuery)}
         >
           Search images
         </MyButton>
@@ -28,3 +41,5 @@ export default class SearchForm extends Component<MySearchFormProps> {
     );
   }
 }
+
+// this.props.updatePagesCount(Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE));
