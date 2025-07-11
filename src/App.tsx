@@ -30,6 +30,10 @@ class App extends Component<object, AppState> {
     this.setState({ currentPage: newPage });
   };
 
+  handleFirstChange = (): void => {
+    this.setState({ currentPage: 1 });
+  };
+
   updatePagesCount = (newPage: number): void => {
     this.setState({ countPages: newPage });
   };
@@ -41,6 +45,7 @@ class App extends Component<object, AppState> {
           searchQuery={this.state.searchQuery}
           onSearchQueryChange={this.handleSearchChange}
           updatePagesCount={this.updatePagesCount}
+          handleFirstChange={this.handleFirstChange}
         />
         <CardForm
           searchQuery={this.state.searchQuery}

@@ -6,6 +6,7 @@ type SearchFormProps = {
   searchQuery: string;
   onSearchQueryChange: (searchQuery: string) => void;
   updatePagesCount: (count: number) => void;
+  handleFirstChange: () => void;
 };
 
 type SearchFormState = {
@@ -39,7 +40,10 @@ export default class SearchForm extends Component<
           }}
         />
         <MyButton
-          onClick={() => this.props.onSearchQueryChange(this.state.searchQuery)}
+          onClick={() => {
+            this.props.handleFirstChange();
+            this.props.onSearchQueryChange(this.state.searchQuery);
+          }}
         >
           Search images
         </MyButton>
