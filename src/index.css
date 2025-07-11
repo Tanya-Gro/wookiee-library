@@ -42,6 +42,10 @@ body {
   gap: 15px;
 }
 
+.column {
+  flex-direction: column;
+}
+
 .material-symbols-outlined {
   cursor: pointer;
   transition: color 0.3s ease;

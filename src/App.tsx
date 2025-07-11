@@ -79,6 +79,9 @@ class App extends Component<object, AppState> {
     const { searchQuery, currentPage, countPages, cards, isLoading } =
       this.state;
 
+    if (this.state.hasError) {
+      throw new Error('Test error');
+    }
     return (
       <>
         <SearchForm
@@ -92,8 +95,12 @@ class App extends Component<object, AppState> {
           onPageChange={this.handlePageChange}
         />
         <div className="wrapper right">
-          <MyButton onClick={() => console.error('error')}>
-            Error Button
+          <MyButton
+            onClick={() => {
+              this.setState({ hasError: true });
+            }}
+          >
+            Throw error
           </MyButton>
         </div>
       </>
