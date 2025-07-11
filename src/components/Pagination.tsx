@@ -26,7 +26,6 @@ class Pagination extends Component<PaginationProps> {
           className="paginate_input"
           type="text"
           name="SearchInput"
-          onChange={(): void => {}}
           disabled
         />
         <span

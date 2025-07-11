@@ -31,6 +31,12 @@ export default class SearchForm extends Component<
           onChange={(e): void => {
             this.setState({ searchQuery: e.target.value });
           }}
+          onBlur={(e): void => {
+            const trimmed = e.target.value.trim();
+            if (trimmed !== this.state.searchQuery) {
+              this.setState({ searchQuery: trimmed });
+            }
+          }}
         />
         <MyButton
           onClick={() => this.props.onSearchQueryChange(this.state.searchQuery)}
@@ -41,5 +47,3 @@ export default class SearchForm extends Component<
     );
   }
 }
-
-// this.props.updatePagesCount(Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE));
