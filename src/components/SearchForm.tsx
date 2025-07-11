@@ -6,7 +6,7 @@ type SearchFormProps = {
   searchQuery: string;
   onSearchQueryChange: (searchQuery: string) => void;
   updatePagesCount: (count: number) => void;
-  handleFirstChange: () => void;
+  handleFirstPage: () => void;
 };
 
 type SearchFormState = {
@@ -41,7 +41,7 @@ export default class SearchForm extends Component<
         />
         <MyButton
           onClick={() => {
-            this.props.handleFirstChange();
+            this.props.handleFirstPage();
             this.props.onSearchQueryChange(this.state.searchQuery);
           }}
         >
