@@ -37,9 +37,9 @@ body {
 .card-list {
   display: flex;
   flex-wrap: wrap;
+  flex-grow: 1;
   justify-content: center;
   gap: 15px;
-  flex-grow: 1;
 }
 
 .material-symbols-outlined {
@@ -56,4 +56,9 @@ body {
 
 .material-symbols-outlined:hover {
   color: blueviolet;
+}
+
+.info-message {
+  font-size: 3rem;
+  color: var(--primary-color);
 }

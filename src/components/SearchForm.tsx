@@ -5,8 +5,6 @@ import MyInput from './UI/input/MyInput';
 type SearchFormProps = {
   searchQuery: string;
   onSearchQueryChange: (searchQuery: string) => void;
-  updatePagesCount: (count: number) => void;
-  handleFirstPage: () => void;
 };
 
 type SearchFormState = {
@@ -22,11 +20,13 @@ export default class SearchForm extends Component<
   };
 
   render(): ReactNode {
+    const { searchQuery } = this.state;
+
     return (
       <div className="wrapper">
         <MyInput
           type="text"
-          value={this.state.searchQuery}
+          value={searchQuery}
           name="SearchInput"
           className="my_input"
           onChange={(e): void => {
@@ -34,15 +34,14 @@ export default class SearchForm extends Component<
           }}
           onBlur={(e): void => {
             const trimmed = e.target.value.trim();
-            if (trimmed !== this.state.searchQuery) {
+            if (trimmed !== searchQuery) {
               this.setState({ searchQuery: trimmed });
             }
           }}
         />
         <MyButton
           onClick={() => {
-            this.props.handleFirstPage();
-            this.props.onSearchQueryChange(this.state.searchQuery);
+            this.props.onSearchQueryChange(searchQuery);
           }}
         >
           Search images

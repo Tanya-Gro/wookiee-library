@@ -9,34 +9,38 @@ type PaginationProps = {
 
 class Pagination extends Component<PaginationProps> {
   render(): ReactNode {
-    const { currentPage, countPages } = this.props;
+    const { currentPage, countPages, onPageChange } = this.props;
 
     return (
-      <div className="wrapper center">
-        <span
-          className={`material-symbols-outlined ${currentPage === 1 ? 'disabled' : ''}`}
-          onClick={() => {
-            this.props.onPageChange(currentPage - 1);
-          }}
-        >
-          arrow_back
-        </span>
-        <MyInput
-          value={`${currentPage} page of ${countPages}`}
-          className="paginate_input"
-          type="text"
-          name="SearchInput"
-          disabled
-        />
-        <span
-          className={`material-symbols-outlined ${currentPage === countPages ? 'disabled' : ''}`}
-          onClick={() => {
-            this.props.onPageChange(currentPage + 1);
-          }}
-        >
-          arrow_forward
-        </span>
-      </div>
+      <>
+        <hr />
+        <div className="wrapper center">
+          <span
+            className={`material-symbols-outlined ${currentPage === 1 ? 'disabled' : ''}`}
+            onClick={() => {
+              onPageChange(currentPage - 1);
+            }}
+          >
+            arrow_back
+          </span>
+          <MyInput
+            value={`Page ${currentPage} of ${countPages}`}
+            className="paginate_input"
+            type="text"
+            name="SearchInput"
+            disabled
+          />
+          <span
+            className={`material-symbols-outlined ${currentPage === countPages ? 'disabled' : ''}`}
+            onClick={() => {
+              onPageChange(currentPage + 1);
+            }}
+          >
+            arrow_forward
+          </span>
+        </div>
+        <hr />
+      </>
     );
   }
 }

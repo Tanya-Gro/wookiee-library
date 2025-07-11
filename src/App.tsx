@@ -4,6 +4,9 @@ import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
 import MyButton from './components/UI/button/MyButton';
 import Pagination from './components/Pagination';
+import Loader from './components/UI/loader/loader';
+import DataFetcher from './api/DataFetcher';
+import type { Card } from './app/types';
 
 type AppState = {
   searchQuery: string;
@@ -11,6 +14,7 @@ type AppState = {
   countPages: number;
   isLoading: boolean;
   hasError: boolean;
+  cards: Card[];
 };
 
 class App extends Component<object, AppState> {
@@ -20,10 +24,11 @@ class App extends Component<object, AppState> {
     countPages: 1,
     isLoading: false,
     hasError: false,
+    cards: [],
   };
 
   handleSearchChange = (newValue: string): void => {
-    this.setState({ searchQuery: newValue });
+    this.setState({ searchQuery: newValue, currentPage: 1 });
     localStorage.setItem('searchQuery', newValue);
   };
 
@@ -31,35 +36,61 @@ class App extends Component<object, AppState> {
     this.setState({ currentPage: newPage });
   };
 
-  handleFirstPage = (): void => {
-    this.setState({ currentPage: 1 });
-  };
+  fetchCards(): void {
+    const COUNT_CARDS_PER_PAGE = 10;
 
-  updatePagesCount = (newPage: number): void => {
-    this.setState({ countPages: newPage });
-  };
+    this.setState({ isLoading: true });
+
+    DataFetcher(this.state.searchQuery, this.state.currentPage)
+      .then((data) => {
+        if (data) {
+          this.setState({
+            cards: data.cards,
+            countPages:
+              Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE) | 1,
+            isLoading: false,
+            hasError: false,
+          });
+        } else {
+          this.setState({ hasError: true, isLoading: false });
+        }
+      })
+      .catch(() => {
+        this.setState({ hasError: true, isLoading: false });
+      });
+  }
+
+  componentDidMount(): void {
+    this.fetchCards();
+  }
+
+  componentDidUpdate(_: object, prevState: AppState): void {
+    const { searchQuery, currentPage } = this.state;
+
+    if (
+      prevState.searchQuery !== searchQuery ||
+      prevState.currentPage !== currentPage
+    ) {
+      this.fetchCards();
+    }
+  }
 
   render(): ReactNode {
+    const { searchQuery, currentPage, countPages, cards, isLoading } =
+      this.state;
+
     return (
       <>
         <SearchForm
-          searchQuery={this.state.searchQuery}
+          searchQuery={searchQuery}
           onSearchQueryChange={this.handleSearchChange}
-          updatePagesCount={this.updatePagesCount}
-          handleFirstPage={this.handleFirstPage}
         />
-        <CardForm
-          searchQuery={this.state.searchQuery}
-          currentPage={this.state.currentPage}
-          updatePagesCount={this.updatePagesCount}
-        />
-        <hr />
+        {isLoading ? <Loader /> : <CardForm cards={cards} />}
         <Pagination
-          currentPage={this.state.currentPage}
-          countPages={this.state.countPages}
+          currentPage={currentPage}
+          countPages={countPages}
           onPageChange={this.handlePageChange}
         />
-        <hr />
         <div className="wrapper right">
           <MyButton onClick={() => console.error('error')}>
             Error Button
