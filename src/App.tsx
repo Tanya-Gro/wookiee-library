@@ -15,7 +15,7 @@ type AppState = {
 
 class App extends Component<object, AppState> {
   state = {
-    searchQuery: '',
+    searchQuery: localStorage.getItem('searchQuery') || '',
     currentPage: 1,
     countPages: 1,
     isLoading: false,
@@ -24,6 +24,7 @@ class App extends Component<object, AppState> {
 
   handleSearchChange = (newValue: string): void => {
     this.setState({ searchQuery: newValue });
+    localStorage.setItem('searchQuery', newValue);
   };
 
   handlePageChange = (newPage: number): void => {
