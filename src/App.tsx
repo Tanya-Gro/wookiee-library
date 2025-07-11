@@ -1,12 +1,13 @@
+import type { Card } from './app/types';
+
 import { Component, type ReactNode } from 'react';
-import './App.css';
 import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
 import MyButton from './components/UI/button/MyButton';
 import Pagination from './components/Pagination';
-import Loader from './components/UI/loader/loader';
 import DataFetcher from './api/DataFetcher';
-import type { Card } from './app/types';
+import './App.css';
+import MyLoader from './components/UI/loader/MyLoader';
 
 type AppState = {
   searchQuery: string;
@@ -88,7 +89,7 @@ class App extends Component<object, AppState> {
           searchQuery={searchQuery}
           onSearchQueryChange={this.handleSearchChange}
         />
-        {isLoading ? <Loader /> : <CardForm cards={cards} />}
+        {isLoading ? <MyLoader /> : <CardForm cards={cards} />}
         <Pagination
           currentPage={currentPage}
           countPages={countPages}
