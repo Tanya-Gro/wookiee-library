@@ -47,8 +47,10 @@ class App extends Component<object, AppState> {
         if (data) {
           this.setState({
             cards: data.cards,
-            countPages:
-              Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE) | 1,
+            countPages: Math.max(
+              1,
+              Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE)
+            ),
             isLoading: false,
             hasError: false,
           });
