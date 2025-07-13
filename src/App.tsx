@@ -96,6 +96,7 @@ class App extends Component<object, AppState> {
           currentPage={currentPage}
           countPages={countPages}
           onPageChange={this.handlePageChange}
+          isLoading={isLoading}
         />
         <div className="wrapper right">
           <MyButton

@@ -4,19 +4,20 @@ import MyInput from './UI/input/MyInput';
 type PaginationProps = {
   currentPage: number;
   countPages: number;
+  isLoading: boolean;
   onPageChange: (newPage: number) => void;
 };
 
 class Pagination extends Component<PaginationProps> {
   render(): ReactNode {
-    const { currentPage, countPages, onPageChange } = this.props;
+    const { currentPage, countPages, isLoading, onPageChange } = this.props;
 
     return (
       <>
         <hr />
         <div className="wrapper center">
           <span
-            className={`material-symbols-outlined ${currentPage === 1 ? 'disabled' : ''}`}
+            className={`material-symbols-outlined ${currentPage === 1 || isLoading ? 'disabled' : ''}`}
             onClick={() => {
               onPageChange(currentPage - 1);
             }}
@@ -31,7 +32,7 @@ class Pagination extends Component<PaginationProps> {
             disabled
           />
           <span
-            className={`material-symbols-outlined ${currentPage === countPages ? 'disabled' : ''}`}
+            className={`material-symbols-outlined ${currentPage === countPages || isLoading ? 'disabled' : ''}`}
             onClick={() => {
               onPageChange(currentPage + 1);
             }}
