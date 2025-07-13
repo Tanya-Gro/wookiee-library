@@ -12,7 +12,7 @@ import MyLoader from './components/UI/loader/MyLoader';
 type AppState = {
   searchQuery: string;
   currentPage: number;
-  countPages: number;
+  pageCount: number;
   isLoading: boolean;
   hasError: boolean;
   cards: Card[];
@@ -22,23 +22,23 @@ class App extends Component<object, AppState> {
   state = {
     searchQuery: localStorage.getItem('searchQuery') || '',
     currentPage: 1,
-    countPages: 1,
+    pageCount: 1,
     isLoading: false,
     hasError: false,
     cards: [],
   };
 
-  handleSearchChange = (newValue: string): void => {
-    this.setState({ searchQuery: newValue, currentPage: 1 });
-    localStorage.setItem('searchQuery', newValue);
+  handleSearchChange = (query: string): void => {
+    this.setState({ searchQuery: query, currentPage: 1 });
+    localStorage.setItem('searchQuery', query);
   };
 
-  handlePageChange = (newPage: number): void => {
-    this.setState({ currentPage: newPage });
+  handlePageChange = (page: number): void => {
+    this.setState({ currentPage: page });
   };
 
   fetchCards(): void {
-    const COUNT_CARDS_PER_PAGE = 10;
+    const CARDS_PER_PAGE = 10;
 
     this.setState({ isLoading: true });
 
@@ -47,9 +47,9 @@ class App extends Component<object, AppState> {
         if (data) {
           this.setState({
             cards: data.cards,
-            countPages: Math.max(
+            pageCount: Math.max(
               1,
-              Math.ceil(data.totalCountCards / COUNT_CARDS_PER_PAGE)
+              Math.ceil(data.totalCountCards / CARDS_PER_PAGE)
             ),
             isLoading: false,
             hasError: false,
@@ -79,7 +79,7 @@ class App extends Component<object, AppState> {
   }
 
   render(): ReactNode {
-    const { searchQuery, currentPage, countPages, cards, isLoading } =
+    const { searchQuery, currentPage, pageCount, cards, isLoading } =
       this.state;
 
     if (this.state.hasError) {
@@ -94,7 +94,7 @@ class App extends Component<object, AppState> {
         {isLoading ? <MyLoader /> : <CardForm cards={cards} />}
         <Pagination
           currentPage={currentPage}
-          countPages={countPages}
+          pageCount={pageCount}
           onPageChange={this.handlePageChange}
           isLoading={isLoading}
         />

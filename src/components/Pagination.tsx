@@ -3,14 +3,14 @@ import MyInput from './UI/input/MyInput';
 
 type PaginationProps = {
   currentPage: number;
-  countPages: number;
+  pageCount: number;
   isLoading: boolean;
-  onPageChange: (newPage: number) => void;
+  onPageChange: (page: number) => void;
 };
 
 class Pagination extends Component<PaginationProps> {
   render(): ReactNode {
-    const { currentPage, countPages, isLoading, onPageChange } = this.props;
+    const { currentPage, pageCount, isLoading, onPageChange } = this.props;
 
     return (
       <>
@@ -25,14 +25,14 @@ class Pagination extends Component<PaginationProps> {
             arrow_back
           </span>
           <MyInput
-            value={`Page ${currentPage} of ${countPages}`}
+            value={`Page ${currentPage} of ${pageCount}`}
             className="paginate_input"
             type="text"
             name="SearchInput"
             disabled
           />
           <span
-            className={`material-symbols-outlined ${currentPage === countPages || isLoading ? 'disabled' : ''}`}
+            className={`material-symbols-outlined ${currentPage === pageCount || isLoading ? 'disabled' : ''}`}
             onClick={() => {
               onPageChange(currentPage + 1);
             }}
