@@ -19,6 +19,9 @@ class Pagination extends Component<PaginationProps> {
           <span
             className={`material-symbols-outlined ${currentPage === 1 || isLoading ? 'disabled' : ''}`}
             onClick={() => {
+              if (currentPage === 1 || isLoading) {
+                return;
+              }
               onPageChange(currentPage - 1);
             }}
           >
@@ -34,6 +37,9 @@ class Pagination extends Component<PaginationProps> {
           <span
             className={`material-symbols-outlined ${currentPage === pageCount || isLoading ? 'disabled' : ''}`}
             onClick={() => {
+              if (currentPage === pageCount || isLoading) {
+                return;
+              }
               onPageChange(currentPage + 1);
             }}
           >
