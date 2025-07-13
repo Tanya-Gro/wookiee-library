@@ -9,19 +9,14 @@ type CardItemProps = {
 
 export default class CardItem extends Component<CardItemProps> {
   render(): ReactNode {
+    const { imageURL, name, birth_year, homeworld } = this.props.card;
     return (
-      <div className={styles.card} key={this.props.card.name}>
-        <img
-          src={this.props.card.imageURL}
-          alt={this.props.card.name}
-          className={styles.img}
-        />
+      <div className={styles.card} key={name}>
+        <img src={imageURL} alt={name} className={styles.img} />
         <div>
-          <h3 className={styles.title}>{this.props.card.name}</h3>
-          <p className={styles.info}>
-            Birth year: {this.props.card.birth_year}
-          </p>
-          <p className={styles.info}>Home world: {this.props.card.homeworld}</p>
+          <h3 className={styles.title}>{name}</h3>
+          <p className={styles.info}>Birth year: {birth_year}</p>
+          <p className={styles.info}>Home world: {homeworld}</p>
         </div>
       </div>
     );

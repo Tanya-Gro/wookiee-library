@@ -15,5 +15,5 @@ export type Card = {
   url: string;
   created: string;
   edited: string;
-  imageURL?: string;
+  imageURL: string;
 };
