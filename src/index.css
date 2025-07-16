@@ -66,3 +66,23 @@ body {
   font-size: 3rem;
   color: var(--primary-color);
 }
+
+.input {
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1.4rem;
+}
+
+.search_input {
+  border: 1px solid var(--primary-color);
+  width: 50%;
+}
+
+.paginate_input {
+  border: 1px;
+  margin: 0 15px;
+  width: 110px;
+  text-align: center;
+  color: var(--primary-color);
+  user-select: none;
+}

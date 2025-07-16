@@ -1,6 +1,5 @@
 import { Component, type ReactNode } from 'react';
 import MyButton from './UI/button/MyButton';
-import MyInput from './UI/input/MyInput';
 
 type SearchFormProps = {
   searchQuery: string;
@@ -24,11 +23,11 @@ export default class SearchForm extends Component<
 
     return (
       <div className="wrapper">
-        <MyInput
+        <input
           type="text"
           value={searchQuery}
           name="SearchInput"
-          className="my_input"
+          className="input search_input"
           onChange={(e): void => {
             this.setState({ searchQuery: e.target.value });
           }}

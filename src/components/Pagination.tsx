@@ -1,5 +1,4 @@
 import { Component, type ReactNode } from 'react';
-import MyInput from './UI/input/MyInput';
 
 type PaginationProps = {
   currentPage: number;
@@ -27,9 +26,9 @@ class Pagination extends Component<PaginationProps> {
           >
             arrow_back
           </span>
-          <MyInput
+          <input
             value={`Page ${currentPage} of ${pageCount}`}
-            className="paginate_input"
+            className="input paginate_input"
             type="text"
             name="SearchInput"
             disabled
