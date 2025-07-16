@@ -16,7 +16,7 @@ class CardForm extends Component<CardFormProps> {
         <hr />
         <div className="card-list wrapper">
           {cards.length ? (
-            cards.map((card) => <CardItem card={card} key={card.created} />)
+            cards.map((card) => <CardItem card={card} key={card.id} />)
           ) : (
             <p className="info-message">Nothing found 😭</p>
           )}

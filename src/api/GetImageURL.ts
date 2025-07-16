@@ -1,8 +1,8 @@
-async function GetImageURL(id: string): Promise<string | undefined> {
-  const URL = 'https://akabab.github.io/starwars-api/api/id/';
+import { URLs } from '../app/constants';
 
+async function GetImageURL(id: string): Promise<string | undefined> {
   try {
-    const response = await fetch(`${URL}${id}.json`);
+    const response = await fetch(`${URLs.image}${id}.json`);
 
     if (!response.ok) {
       console.error(`HTTP error! Status: ${response.status}`);

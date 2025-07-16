@@ -5,9 +5,10 @@ import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
 import MyButton from './components/UI/button/MyButton';
 import Pagination from './components/Pagination';
-import DataFetcher from './api/DataFetcher';
-import './App.css';
 import MyLoader from './components/UI/loader/MyLoader';
+import getCards from './api/getCards';
+import { isFetchError } from './helpers/isFetchError';
+import './App.css';
 
 type AppState = {
   searchQuery: string;
@@ -15,6 +16,7 @@ type AppState = {
   pageCount: number;
   isLoading: boolean;
   hasError: boolean;
+  errorMessage: string;
   cards: Card[];
 };
 
@@ -25,6 +27,7 @@ class App extends Component<object, AppState> {
     pageCount: 1,
     isLoading: false,
     hasError: false,
+    errorMessage: '',
     cards: [],
   };
 
@@ -37,53 +40,49 @@ class App extends Component<object, AppState> {
     this.setState({ currentPage: page });
   };
 
-  fetchCards(): void {
-    const CARDS_PER_PAGE = 10;
-
+  async componentDidMount(): Promise<void> {
     this.setState({ isLoading: true });
+    const data = await getCards(this.state.searchQuery, this.state.currentPage);
 
-    DataFetcher(this.state.searchQuery, this.state.currentPage)
-      .then((data) => {
-        if (data) {
-          this.setState({
-            cards: data.cards,
-            pageCount: Math.max(
-              1,
-              Math.ceil(data.totalCountCards / CARDS_PER_PAGE)
-            ),
-            isLoading: false,
-            hasError: false,
-          });
-        } else {
-          this.setState({ hasError: true, isLoading: false });
-        }
-      })
-      .catch(() => {
-        this.setState({ hasError: true, isLoading: false });
+    if (!isFetchError(data)) {
+      this.setState({
+        cards: data.cards,
+        pageCount: data.pageCount,
+        isLoading: false,
+        hasError: false,
       });
-  }
-
-  componentDidMount(): void {
-    this.fetchCards();
+    } else {
+      this.setState({
+        hasError: true,
+        errorMessage: data.message,
+        isLoading: false,
+      });
+    }
   }
 
   componentDidUpdate(_: object, prevState: AppState): void {
     const { searchQuery, currentPage } = this.state;
-
     if (
       prevState.searchQuery !== searchQuery ||
       prevState.currentPage !== currentPage
     ) {
-      this.fetchCards();
+      this.componentDidMount();
     }
   }
 
   render(): ReactNode {
-    const { searchQuery, currentPage, pageCount, cards, isLoading } =
-      this.state;
+    const {
+      searchQuery,
+      currentPage,
+      pageCount,
+      cards,
+      isLoading,
+      errorMessage,
+      hasError,
+    } = this.state;
 
-    if (this.state.hasError) {
-      throw new Error('Test error');
+    if (hasError) {
+      throw new Error(errorMessage);
     }
     return (
       <>
@@ -101,7 +100,7 @@ class App extends Component<object, AppState> {
         <div className="wrapper right">
           <MyButton
             onClick={() => {
-              this.setState({ hasError: true });
+              this.setState({ hasError: true, errorMessage: 'Test error' });
             }}
           >
             Throw error
