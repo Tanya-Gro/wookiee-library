@@ -1,5 +1,5 @@
 import { Component, type ReactNode } from 'react';
-import MyButton from './UI/button/MyButton';
+import Button from './UI/button/Button';
 
 type SearchFormProps = {
   searchQuery: string;
@@ -36,14 +36,14 @@ export default class SearchForm extends Component<
             this.setState({ searchQuery: e.target.value });
           }}
         />
-        <MyButton
+        <Button
           disabled={isLoading}
           onClick={() => {
             this.props.onSearchQueryChange(searchQuery.trim());
           }}
         >
           Search images
-        </MyButton>
+        </Button>
       </div>
     );
   }

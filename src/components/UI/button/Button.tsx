@@ -1,25 +1,21 @@
 import { Component, type MouseEventHandler, type ReactNode } from 'react';
-import styles from './MyButton.module.css';
+import styles from './Button.module.css';
 
-type MyButtonProps = {
+type ButtonProps = {
   children: ReactNode;
   onClick: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
 };
 
-class MyButton extends Component<MyButtonProps> {
+class Button extends Component<ButtonProps> {
   render(): ReactNode {
     const { children, onClick, disabled = false } = this.props;
     return (
-      <button
-        className={styles.my_button}
-        onClick={onClick}
-        disabled={disabled}
-      >
+      <button className={styles.button} onClick={onClick} disabled={disabled}>
         {children}
       </button>
     );
   }
 }
 
-export default MyButton;
+export default Button;

@@ -3,7 +3,7 @@ import type { Card } from './app/types';
 import { Component, type ReactNode } from 'react';
 import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
-import MyButton from './components/UI/button/MyButton';
+import Button from './components/UI/button/Button';
 import Pagination from './components/Pagination';
 import MyLoader from './components/UI/loader/MyLoader';
 import getCards from './api/getCards';
@@ -99,13 +99,13 @@ class App extends Component<object, AppState> {
           isLoading={isLoading}
         />
         <div className="wrapper right">
-          <MyButton
+          <Button
             onClick={() => {
               this.setState({ hasError: true, errorMessage: 'Test error' });
             }}
           >
             Throw error
-          </MyButton>
+          </Button>
         </div>
       </>
     );
