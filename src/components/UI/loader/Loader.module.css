@@ -1,0 +1,36 @@
+.loader_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.loader {
+  display: flex;
+  margin: 0 auto;
+  border: 24px solid;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: animation_loader 1s linear infinite;
+}
+
+@keyframes animation_loader {
+  0% {
+    border-color: rgba(146, 46, 239, 0.15) rgba(146, 46, 239, 0.25)
+      rgba(146, 46, 239, 0.35) rgba(146, 46, 239, 0.75);
+  }
+  33% {
+    border-color: rgba(146, 46, 239, 0.75) rgba(146, 46, 239, 0.15)
+      rgba(146, 46, 239, 0.25) rgba(146, 46, 239, 0.35);
+  }
+  66% {
+    border-color: rgba(146, 46, 2395, 0.35) rgba(146, 46, 239, 0.75)
+      rgba(146, 46, 239, 0.15) rgba(146, 46, 239, 0.25);
+  }
+  100% {
+    border-color: rgba(146, 46, 239, 0.25) rgba(146, 46, 239, 0.35)
+      rgba(146, 46, 239, 0.75) rgba(146, 46, 239, 0.15);
+  }
+}

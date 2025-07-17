@@ -1,0 +1,88 @@
+:root {
+  --primary-color: rgb(20, 44, 97);
+  --background-color: rgba(103, 129, 129, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background-image: url(/rm309-adj-14.jpg);
+}
+
+.wrapper {
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.center {
+  justify-content: center;
+}
+
+.right {
+  justify-content: end;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 15px;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.material-symbols-outlined.disabled {
+  pointer-events: none;
+  cursor: auto;
+  color: lightsteelblue;
+}
+
+.material-symbols-outlined:hover {
+  color: blueviolet;
+}
+
+.info-message {
+  font-size: 3rem;
+  color: var(--primary-color);
+}
+
+.input {
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 1.4rem;
+}
+
+.search_input {
+  border: 1px solid var(--primary-color);
+  width: 50%;
+}
+
+.paginate_input {
+  border: 1px;
+  margin: 0 15px;
+  width: 110px;
+  text-align: center;
+  color: var(--primary-color);
+  user-select: none;
+}
