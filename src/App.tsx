@@ -88,6 +88,7 @@ class App extends Component<object, AppState> {
       <>
         <SearchForm
           searchQuery={searchQuery}
+          isLoading={isLoading}
           onSearchQueryChange={this.handleSearchChange}
         />
         {isLoading ? <MyLoader /> : <CardForm cards={cards} />}

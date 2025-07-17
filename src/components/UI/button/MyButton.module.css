@@ -13,3 +13,10 @@
   background-color: var(--background-color);
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
+.my_button:disabled {
+  cursor: auto;
+  color: var(--background-color);
+  border: 2px solid rgba(103, 129, 129, 0.15);
+  box-shadow: none;
+}

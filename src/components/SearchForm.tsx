@@ -3,6 +3,7 @@ import MyButton from './UI/button/MyButton';
 
 type SearchFormProps = {
   searchQuery: string;
+  isLoading: boolean;
   onSearchQueryChange: (searchQuery: string) => void;
 };
 
@@ -20,6 +21,7 @@ export default class SearchForm extends Component<
 
   render(): ReactNode {
     const { searchQuery } = this.state;
+    const isLoading = this.props.isLoading;
 
     return (
       <div className="wrapper">
@@ -28,19 +30,16 @@ export default class SearchForm extends Component<
           value={searchQuery}
           name="SearchInput"
           className="input search_input"
+          disabled={isLoading}
+          placeholder="Looking for..."
           onChange={(e): void => {
             this.setState({ searchQuery: e.target.value });
           }}
-          onBlur={(e): void => {
-            const trimmed = e.target.value.trim();
-            if (trimmed !== searchQuery) {
-              this.setState({ searchQuery: trimmed });
-            }
-          }}
         />
         <MyButton
+          disabled={isLoading}
           onClick={() => {
-            this.props.onSearchQueryChange(searchQuery);
+            this.props.onSearchQueryChange(searchQuery.trim());
           }}
         >
           Search images
