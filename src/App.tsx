@@ -5,7 +5,7 @@ import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
 import Button from './components/UI/button/Button';
 import Pagination from './components/Pagination';
-import MyLoader from './components/UI/loader/MyLoader';
+import Loader from './components/UI/loader/Loader';
 import getCards from './api/getCards';
 import { isFetchError } from './helpers/isFetchError';
 import './App.css';
@@ -91,7 +91,7 @@ class App extends Component<object, AppState> {
           isLoading={isLoading}
           onSearchQueryChange={this.handleSearchChange}
         />
-        {isLoading ? <MyLoader /> : <CardForm cards={cards} />}
+        {isLoading ? <Loader /> : <CardForm cards={cards} />}
         <Pagination
           currentPage={currentPage}
           pageCount={pageCount}

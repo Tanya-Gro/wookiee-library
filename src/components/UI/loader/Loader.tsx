@@ -1,7 +1,7 @@
 import { Component, type ReactNode } from 'react';
-import styles from './MyLoader.module.css';
+import styles from './Loader.module.css';
 
-class MyLoader extends Component {
+class Loader extends Component {
   render(): ReactNode {
     return (
       <div className={styles.loader_wrapper}>
@@ -12,4 +12,4 @@ class MyLoader extends Component {
   }
 }
 
-export default MyLoader;
+export default Loader;
