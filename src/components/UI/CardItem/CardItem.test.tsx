@@ -1,7 +1,7 @@
 import CardItem from './CardItem';
 import { render, screen } from '@testing-library/react';
 import { mockCard } from '../../../test-utils/mocks/cards';
-import styles from '../../components/UI/CardItem/CardItem.module.css';
+import styles from './CardItem.module.css';
 
 describe('CardItem', () => {
   it('render card elements', () => {
