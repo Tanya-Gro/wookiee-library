@@ -22,4 +22,17 @@ export const handlers = [
       { status: 500 }
     );
   }),
+
+  http.get(`${URLs.image}:id.json`, ({ request }) => {
+    const url = new URL(request.url);
+    const lastElem = url.pathname.split('/').at(-1);
+    const id = lastElem?.substring(0, lastElem.indexOf('.'));
+
+    if (id) {
+      if (id === mockResponse.results[0].id) {
+        return HttpResponse.json({ image: mockResponse.results[0].imageURL });
+      }
+    }
+    return new HttpResponse(null, { status: 404 });
+  }),
 ];
