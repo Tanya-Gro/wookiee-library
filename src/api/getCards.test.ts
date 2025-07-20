@@ -35,7 +35,6 @@ describe('getCards', () => {
 
   it('returns cards and pageCount on success, check invalid id', async () => {
     const result = await getCards(searchQuery, currentPage);
-    console.log(result);
 
     expect('cards' in result).toBe(true);
 
@@ -49,7 +48,6 @@ describe('getCards', () => {
 
   it('returns processed cards and pageCount on success', async () => {
     const result = await getCards(searchQuery, currentPage);
-    console.log(result);
 
     expect('cards' in result).toBe(true);
 
