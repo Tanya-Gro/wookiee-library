@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { URLs } from '../../app/constants';
-import { mockResponse } from './response';
+import { mockResponse, mockServerError } from './response';
 import { mockRequest } from './request';
 
 export const handlers = [
@@ -17,10 +17,7 @@ export const handlers = [
       return HttpResponse.json(mockResponse);
     }
 
-    return new HttpResponse(
-      { hasError: true, message: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return new HttpResponse(mockServerError, { status: 500 });
   }),
 
   http.get(`${URLs.planets}:id/`, ({ request }) => {
