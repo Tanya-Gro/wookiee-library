@@ -7,7 +7,7 @@ describe('ErrorBoundary', () => {
     return null;
   }
 
-  it('render ErrorBoundary onError', async () => {
+  it('render ErrorBoundary onError', () => {
     render(
       <ErrorBoundary>
         <Bomb />
