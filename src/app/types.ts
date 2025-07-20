@@ -39,4 +39,5 @@ export type Response = {
 export type Url = {
   readonly people: string;
   readonly image: string;
+  readonly planets: string;
 };

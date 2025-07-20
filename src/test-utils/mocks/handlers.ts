@@ -23,6 +23,20 @@ export const handlers = [
     );
   }),
 
+  http.get(`${URLs.planets}:id/`, ({ request }) => {
+    const url = new URL(request.url);
+    const planetId = url.pathname.split('/').at(-2);
+
+    if (planetId) {
+      if (planetId === '1') {
+        return HttpResponse.json({ name: 'Tatooine' });
+      } else {
+        return HttpResponse.json({ name: 'N/A' });
+      }
+    }
+    return new HttpResponse(null, { status: 404 });
+  }),
+
   http.get(`${URLs.image}:id.json`, ({ request }) => {
     const url = new URL(request.url);
     const lastElem = url.pathname.split('/').at(-1);
