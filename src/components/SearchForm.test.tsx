@@ -6,6 +6,8 @@ import { mockRequest } from '../test-utils/mocks/request';
 const handleSearch = vi.fn();
 
 describe('SearchForm', () => {
+  const ROLE_OPTIONS = { name: /search/i };
+
   it('render SearchForm', async () => {
     render(
       <SearchForm
@@ -22,7 +24,7 @@ describe('SearchForm', () => {
     await userEvent.type(input, mockRequest.searchQuery);
     expect(input).toHaveValue(mockRequest.searchQuery);
 
-    const button = screen.getByRole('button', { name: /search/i });
+    const button = screen.getByRole('button', ROLE_OPTIONS);
     expect(button).toBeInTheDocument();
 
     await userEvent.click(button);

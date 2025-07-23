@@ -4,16 +4,18 @@ import { mockCard } from '../../../test-utils/mocks/cards';
 import styles from './CardItem.module.css';
 
 describe('CardItem', () => {
+  const ROLE_OPTIONS = { name: mockCard[0].name };
+
   it('render card elements', () => {
     render(<CardItem card={mockCard[0]} />);
 
-    const image = screen.getByRole('img', { name: mockCard[0].name });
+    const image = screen.getByRole('img', ROLE_OPTIONS);
     expect(image).toBeInTheDocument();
     expect(image).toHaveClass(styles.img);
     expect(image).toHaveAttribute('src', mockCard[0].imageURL);
     expect(image).toHaveAttribute('alt', mockCard[0].name);
 
-    const name = screen.getByRole('heading', { name: mockCard[0].name });
+    const name = screen.getByRole('heading', ROLE_OPTIONS);
     expect(name).toBeInTheDocument();
     expect(name).toHaveClass(styles.title);
 
