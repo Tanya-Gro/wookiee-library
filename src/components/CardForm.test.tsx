@@ -1,15 +1,6 @@
-import type { ReactNode } from 'react';
-import type { Card } from '../app/types';
-
 import { render, screen } from '@testing-library/react';
 import { mockCard } from '../test-utils/mocks/cards';
 import CardForm from './CardForm';
-
-vi.mock('./UI/CardItem/CardItem', () => ({
-  default: ({ card }: { card: Card }): ReactNode => {
-    return <div data-testid="card">{card.name}</div>;
-  },
-}));
 
 describe('CardForm', () => {
   it('render CardForm with cards', () => {

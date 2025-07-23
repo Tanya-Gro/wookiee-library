@@ -11,7 +11,7 @@ export default class CardItem extends Component<CardItemProps> {
   render(): ReactNode {
     const { imageURL, name, birth_year, homeworld } = this.props.card;
     return (
-      <div className={styles.card} key={name}>
+      <div className={styles.card} key={name} data-testid="card">
         <img src={imageURL} alt={name} className={styles.img} />
         <div>
           <h3 className={styles.title}>{name}</h3>
