@@ -1,3 +1,4 @@
+import { isFetchError } from '../helpers/isFetchError';
 import { mockCard } from '../test-utils/mocks/cards';
 import { mockRequest, emptyMockRequest } from '../test-utils/mocks/request';
 import getCards from './getCards';
@@ -23,7 +24,7 @@ describe('getCards', () => {
     expect(result).toHaveProperty('cards');
     expect(result).toHaveProperty('pageCount', 1);
 
-    if ('cards' in result) {
+    if (!isFetchError(result)) {
       const firstCard = result.cards[0];
 
       expect(result.cards).toHaveLength(mockCard.length);
@@ -38,7 +39,7 @@ describe('getCards', () => {
 
     expect('cards' in result).toBe(true);
 
-    if ('cards' in result) {
+    if (!isFetchError(result)) {
       const cardWithBrockenId = result.cards[2];
 
       expect(cardWithBrockenId.id).toBe(mockCard[2].created);
@@ -51,7 +52,7 @@ describe('getCards', () => {
 
     expect('cards' in result).toBe(true);
 
-    if ('cards' in result) {
+    if (!isFetchError(result)) {
       const cardWithBrockenId = result.cards[2];
 
       expect(cardWithBrockenId.id).toBe(mockCard[2].created);
