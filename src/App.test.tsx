@@ -20,8 +20,5 @@ describe('App', () => {
       expect(screen.getByTestId('card-form')).toBeInTheDocument();
     });
     expect(screen.getByTestId('pagination')).toBeInTheDocument();
-    expect(
-      screen.getByRole('button', { name: /throw error/i })
-    ).toBeInTheDocument();
   });
 });

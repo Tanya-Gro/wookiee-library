@@ -3,7 +3,6 @@ import type { Card } from './app/types';
 import { Component, type ReactNode } from 'react';
 import SearchForm from './components/SearchForm';
 import CardForm from './components/CardForm';
-import Button from './components/UI/button/Button';
 import Pagination from './components/Pagination';
 import Loader from './components/UI/loader/Loader';
 import getCards from './api/getCards';
@@ -98,15 +97,6 @@ class App extends Component<object, AppState> {
           onPageChange={this.handlePageChange}
           isLoading={isLoading}
         />
-        <div className="wrapper right">
-          <Button
-            onClick={() => {
-              this.setState({ hasError: true, errorMessage: 'Test error' });
-            }}
-          >
-            Throw error
-          </Button>
-        </div>
       </>
     );
   }
