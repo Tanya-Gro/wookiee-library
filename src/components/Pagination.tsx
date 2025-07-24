@@ -14,7 +14,7 @@ class Pagination extends Component<PaginationProps> {
     return (
       <>
         <hr />
-        <div className="wrapper center">
+        <div className="wrapper center" data-testid="pagination">
           <span
             className={`material-symbols-outlined ${currentPage === 1 || isLoading ? 'disabled' : ''}`}
             onClick={() => {

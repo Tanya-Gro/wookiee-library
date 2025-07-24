@@ -11,12 +11,16 @@ export default class CardItem extends Component<CardItemProps> {
   render(): ReactNode {
     const { imageURL, name, birth_year, homeworld } = this.props.card;
     return (
-      <div className={styles.card} key={name}>
+      <div className={styles.card} key={name} data-testid="card">
         <img src={imageURL} alt={name} className={styles.img} />
         <div>
           <h3 className={styles.title}>{name}</h3>
-          <p className={styles.info}>Birth year: {birth_year}</p>
-          <p className={styles.info}>Home world: {homeworld}</p>
+          <p className={styles.info} data-testid="birth-year">
+            Birth year: {birth_year}
+          </p>
+          <p className={styles.info} data-testid="home-world">
+            Home world: {homeworld}
+          </p>
         </div>
       </div>
     );

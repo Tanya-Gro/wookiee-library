@@ -11,7 +11,7 @@ async function getCards(
 ): Promise<DataType | FetchError> {
   try {
     const response = await fetch(
-      `${URLs.people}${searchQuery ? `search=${searchQuery}&` : ''}page=${currentPage}`
+      `${URLs.people}?${searchQuery ? `search=${searchQuery}&` : ''}page=${currentPage}`
     );
 
     if (!response.ok) {

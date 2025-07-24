@@ -24,7 +24,7 @@ export default class SearchForm extends Component<
     const isLoading = this.props.isLoading;
 
     return (
-      <div className="wrapper">
+      <div className="wrapper" data-testid="search-form">
         <input
           type="text"
           value={searchQuery}

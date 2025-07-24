@@ -6,7 +6,7 @@ class Loader extends Component {
     return (
       <div className={styles.loader_wrapper}>
         <p className="info-message">Loading...</p>
-        <div className={styles.loader} />
+        <div className={styles.loader} data-testid="loader" />
       </div>
     );
   }
