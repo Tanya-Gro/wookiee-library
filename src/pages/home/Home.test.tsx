@@ -1,19 +1,19 @@
-import type { DataType } from './app/types';
+import type { DataType } from '../../app/types';
 
-import App from './App';
+import HomePage from './Home';
+import { mockCard } from '../../test-utils/mocks/cards';
 import { render, screen, waitFor } from '@testing-library/react';
-import { mockCard } from './test-utils/mocks/cards';
 
-vi.mock('./api/getCards', () => ({
+vi.mock('../../api/getCards', () => ({
   default: (): DataType => ({
     cards: mockCard,
     pageCount: 1,
   }),
 }));
 
-describe('App', () => {
-  it('render App', async () => {
-    render(<App />);
+describe('Home', () => {
+  it('render Home', async () => {
+    render(<HomePage />);
 
     expect(screen.getByTestId('search-form')).toBeInTheDocument();
     await waitFor(() => {
