@@ -1,6 +1,7 @@
 :root {
   --primary-color: rgb(20, 44, 97);
   --background-color: rgba(103, 129, 129, 0.3);
+  --hover-link-color: blueviolet;
 }
 
 * {
@@ -15,6 +16,18 @@ html {
 
 body {
   background-image: url(/rm309-adj-14.jpg);
+}
+
+#root {
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .wrapper {
@@ -59,7 +72,7 @@ body {
 }
 
 .material-symbols-outlined:hover {
-  color: blueviolet;
+  color: var(--hover-link-color);
 }
 
 .info-message {
@@ -85,4 +98,18 @@ body {
   text-align: center;
   color: var(--primary-color);
   user-select: none;
+}
+
+.link {
+  text-decoration: none;
+  padding: 0 10px;
+  font-size: 2rem;
+  color: var(--primary-color);
+  transition: text-shadow 0.3s ease;
+}
+
+.link:hover {
+  color: var(--hover-link-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  text-decoration: underline;
 }
