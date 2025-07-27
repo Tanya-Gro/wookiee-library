@@ -1,5 +1,5 @@
 import type { Card } from '../app/types';
-import type { FC, ReactNode } from 'react';
+import { type FC, type ReactNode } from 'react';
 
 import CardItem from './UI/CardItem/CardItem';
 
