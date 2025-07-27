@@ -11,6 +11,15 @@ vi.mock('../../api/getCards', () => ({
   }),
 }));
 
+vi.mock('react-router-dom', async () => ({
+  ...vi.importActual('react-router-dom'),
+  useSearchParams: vi.fn(() => {
+    const searchParams = new URLSearchParams({ page: '1' });
+    const setSearchParams = vi.fn();
+    return [searchParams, setSearchParams] as const;
+  }),
+}));
+
 describe('Home', () => {
   it('render Home', async () => {
     render(<HomePage />);
