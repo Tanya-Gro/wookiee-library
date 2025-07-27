@@ -7,17 +7,16 @@ import SearchForm from '../../components/SearchForm';
 import Pagination from '../../components/Pagination';
 import Loader from '../../components/UI/loader/Loader';
 import CardForm from '../../components/CardForm';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 const HomePage = (): ReactNode => {
-  const [searchQuery, setSearchQuery] = useState<string>(
-    localStorage.getItem('searchQuery') || ''
-  );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageCount, setPageCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [cards, setCards] = useState<Card[]>([]);
+  const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
 
   useEffect(() => {
     const getData = async (): Promise<void> => {
@@ -41,7 +40,6 @@ const HomePage = (): ReactNode => {
   const handleSearchChange = (query: string): void => {
     setSearchQuery(query);
     setCurrentPage(1);
-    localStorage.setItem('searchQuery', query);
   };
 
   const handlePageChange = (page: number): void => {
