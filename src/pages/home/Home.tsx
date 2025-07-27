@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import type { Card } from '../../app/types';
 
 import { isFetchError } from '../../helpers/isFetchError';
@@ -10,7 +11,10 @@ import CardForm from '../../components/CardForm';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
 const HomePage = (): ReactNode => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState<number>(
+    parseInt(searchParams.get('page') || '1', 10)
+  );
   const [pageCount, setPageCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);
@@ -19,6 +23,7 @@ const HomePage = (): ReactNode => {
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
 
   useEffect(() => {
+    setSearchParams({ page: currentPage.toString() });
     const getData = async (): Promise<void> => {
       setIsLoading(true);
       const data = await getCards(searchQuery, currentPage);
@@ -35,7 +40,7 @@ const HomePage = (): ReactNode => {
       }
     };
     getData();
-  }, [searchQuery, currentPage]);
+  }, [searchQuery, currentPage, setSearchParams]);
 
   const handleSearchChange = (query: string): void => {
     setSearchQuery(query);
