@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import type { Card } from '../../app/types';
 
 import { isFetchError } from '../../helpers/isFetchError';
@@ -8,98 +8,66 @@ import Pagination from '../../components/Pagination';
 import Loader from '../../components/UI/loader/Loader';
 import CardForm from '../../components/CardForm';
 
-type HomeState = {
-  searchQuery: string;
-  currentPage: number;
-  pageCount: number;
-  isLoading: boolean;
-  hasError: boolean;
-  errorMessage: string;
-  cards: Card[];
-};
+const HomePage = (): ReactNode => {
+  const [searchQuery, setSearchQuery] = useState<string>(
+    localStorage.getItem('searchQuery') || ''
+  );
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [pageCount, setPageCount] = useState<number>(1);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [cards, setCards] = useState<Card[]>([]);
 
-class HomePage extends Component<object, HomeState> {
-  state = {
-    searchQuery: localStorage.getItem('searchQuery') || '',
-    currentPage: 1,
-    pageCount: 1,
-    isLoading: false,
-    hasError: false,
-    errorMessage: '',
-    cards: [],
-  };
+  useEffect(() => {
+    const getData = async (): Promise<void> => {
+      setIsLoading(true);
+      const data = await getCards(searchQuery, currentPage);
 
-  handleSearchChange = (query: string): void => {
-    this.setState({ searchQuery: query, currentPage: 1 });
+      if (!isFetchError(data)) {
+        setCards(data.cards);
+        setPageCount(data.pageCount);
+        setIsLoading(false);
+        setHasError(false);
+      } else {
+        setHasError(true);
+        setErrorMessage(data.message);
+        setIsLoading(false);
+      }
+    };
+    getData();
+  }, [searchQuery, currentPage]);
+
+  const handleSearchChange = (query: string): void => {
+    setSearchQuery(query);
+    setCurrentPage(1);
     localStorage.setItem('searchQuery', query);
   };
 
-  handlePageChange = (page: number): void => {
-    this.setState({ currentPage: page });
+  const handlePageChange = (page: number): void => {
+    setCurrentPage(page);
   };
 
-  async componentDidMount(): Promise<void> {
-    this.setState({ isLoading: true });
-    const data = await getCards(this.state.searchQuery, this.state.currentPage);
-
-    if (!isFetchError(data)) {
-      this.setState({
-        cards: data.cards,
-        pageCount: data.pageCount,
-        isLoading: false,
-        hasError: false,
-      });
-    } else {
-      this.setState({
-        hasError: true,
-        errorMessage: data.message,
-        isLoading: false,
-      });
-    }
+  if (hasError) {
+    throw new Error(errorMessage);
   }
 
-  componentDidUpdate(_: object, prevState: HomeState): void {
-    const { searchQuery, currentPage } = this.state;
-    if (
-      prevState.searchQuery !== searchQuery ||
-      prevState.currentPage !== currentPage
-    ) {
-      this.componentDidMount();
-    }
-  }
-
-  render(): ReactNode {
-    const {
-      searchQuery,
-      currentPage,
-      pageCount,
-      cards,
-      isLoading,
-      errorMessage,
-      hasError,
-    } = this.state;
-
-    if (hasError) {
-      throw new Error(errorMessage);
-    }
-
-    return (
-      <>
-        <SearchForm
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          onSearchQueryChange={this.handleSearchChange}
-        />
-        {isLoading ? <Loader /> : <CardForm cards={cards} />}
-        <Pagination
-          currentPage={currentPage}
-          pageCount={pageCount}
-          onPageChange={this.handlePageChange}
-          isLoading={isLoading}
-        />
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <SearchForm
+        searchQuery={searchQuery}
+        isLoading={isLoading}
+        onSearchQueryChange={handleSearchChange}
+      />
+      {isLoading ? <Loader /> : <CardForm cards={cards} />}
+      <Pagination
+        currentPage={currentPage}
+        pageCount={pageCount}
+        onPageChange={handlePageChange}
+        isLoading={isLoading}
+      />
+    </>
+  );
+};
 
 export default HomePage;
