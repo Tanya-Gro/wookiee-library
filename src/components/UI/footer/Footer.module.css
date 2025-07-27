@@ -1,0 +1,22 @@
+.subtitle {
+  font-size: 2rem;
+  font-style: italic;
+}
+
+.github_link,
+.rss_link {
+  height: 60px;
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+}
+
+.rss_link {
+  background-image: url(/RSS.svg);
+  width: 115px;
+}
+
+.github_link {
+  background-image: url(/github.svg);
+  width: 60px;
+}

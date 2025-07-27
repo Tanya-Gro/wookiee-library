@@ -40,4 +40,6 @@ export type Url = {
   readonly people: string;
   readonly image: string;
   readonly planets: string;
+  readonly RSS: string;
+  readonly GitHub: string;
 };

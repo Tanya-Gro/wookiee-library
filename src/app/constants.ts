@@ -6,4 +6,6 @@ export const URLs: Url = {
   people: 'https://swapi.py4e.com/api/people/',
   image: 'https://akabab.github.io/starwars-api/api/id/',
   planets: 'https://swapi.py4e.com/api/planets/',
+  RSS: 'https://rs.school/react/',
+  GitHub: 'https://github.com/Tanya-Gro',
 };
