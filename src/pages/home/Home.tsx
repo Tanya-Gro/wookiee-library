@@ -47,10 +47,6 @@ const HomePage = (): ReactNode => {
     setCurrentPage(1);
   };
 
-  const handlePageChange = (page: number): void => {
-    setCurrentPage(page);
-  };
-
   if (hasError) {
     throw new Error(errorMessage);
   }
@@ -66,7 +62,7 @@ const HomePage = (): ReactNode => {
       <Pagination
         currentPage={currentPage}
         pageCount={pageCount}
-        onPageChange={handlePageChange}
+        onPageChange={setCurrentPage}
         isLoading={isLoading}
       />
     </>
