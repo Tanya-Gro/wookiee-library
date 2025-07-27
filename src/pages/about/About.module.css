@@ -1,11 +1,11 @@
-.not_found {
+.about {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   flex-grow: 1;
-  background: rgba(0, 0, 0, 0.4);
+
+  border: 0px;
   color: var(--primary-color);
 
   font-family:
@@ -20,21 +20,13 @@
     'Open Sans',
     'Helvetica Neue',
     sans-serif;
-  padding: 1rem;
-}
-
-.not_found::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.8));
-  pointer-events: none;
 }
 
 .title {
   font-size: 7rem;
   letter-spacing: 3px;
   margin-bottom: 1rem;
+  padding: 0 15px;
 
   background: linear-gradient(
     to right,
@@ -42,13 +34,11 @@
     var(--primary-color),
     transparent
   );
-
-  background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .subtitle {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-style: italic;
-  margin-bottom: 2rem;
 }
