@@ -27,15 +27,24 @@
   padding: 10px;
   margin: 10px 0 10px 5px;
 
-  opacity: 0;
-  transform: translateX(100%);
-  animation: scaleIn 0.4s ease-out forwards;
+  animation: nascency 1s;
 }
 
-@keyframes scaleIn {
+@keyframes nascency {
+  from {
+    opacity: 0;
+  }
   to {
     opacity: 1;
-    transform: translateX(0);
+  }
+}
+
+@keyframes fading {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
