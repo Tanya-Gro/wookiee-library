@@ -1,19 +1,21 @@
 import { URLs } from '../app/constants';
+import type { Details, FetchError } from '../app/types';
 
-async function GetImageURL(id: string): Promise<string | undefined> {
+async function getDetails(id: string): Promise<Details | FetchError> {
   try {
     const response = await fetch(`${URLs.image}${id}.json`);
 
     if (!response.ok) {
       console.error(`HTTP error! Status: ${response.status}`);
-      return;
+      return { hasError: true, message: `${response.status}` };
     }
 
     const data = await response.json();
-    return data.image;
+    return data;
   } catch (error) {
     console.error('Fetch error:', error);
+    return { hasError: true, message: String(error) };
   }
 }
 
-export default GetImageURL;
+export default getDetails;
