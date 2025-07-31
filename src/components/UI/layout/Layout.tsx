@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
-const Header: FC = () => {
+const Layout: FC = () => {
   return (
     <>
       <header className="wrapper center header">
@@ -16,8 +16,11 @@ const Header: FC = () => {
         </nav>
       </header>
       <hr />
+      <main className="wrapper grow column">
+        <Outlet />
+      </main>
     </>
   );
 };
 
-export default Header;
+export default Layout;
