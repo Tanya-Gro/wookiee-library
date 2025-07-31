@@ -39,12 +39,22 @@ body {
   width: 100%;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .center {
   justify-content: center;
+  align-items: center;
 }
 
 .right {
   justify-content: end;
+}
+
+.left {
+  align-items: start;
+  text-align: start;
 }
 
 .card-list {
@@ -116,8 +126,7 @@ body {
 
 .header,
 .footer {
-  height: 80px;
-  padding-left: 20px;
-  padding-right: 20px;
+  height: 60px;
+  padding: 10px 20px 0 20px;
   align-items: center;
 }

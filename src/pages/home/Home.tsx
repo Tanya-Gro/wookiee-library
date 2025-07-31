@@ -22,8 +22,13 @@ const HomePage = (): ReactNode => {
   const [cards, setCards] = useState<Card[]>([]);
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
 
+  const page = searchParams.get('page');
+
   useEffect(() => {
-    setSearchParams({ page: currentPage.toString() });
+    if (page !== null && currentPage !== +page) {
+      setSearchParams({ page: currentPage.toString() });
+    }
+
     const getData = async (): Promise<void> => {
       setIsLoading(true);
       const data = await getCards(searchQuery, currentPage);
@@ -40,7 +45,7 @@ const HomePage = (): ReactNode => {
       }
     };
     getData();
-  }, [searchQuery, currentPage, setSearchParams]);
+  }, [searchQuery, currentPage, setSearchParams, page]);
 
   const handleSearchChange = (query: string): void => {
     setSearchQuery(query);
