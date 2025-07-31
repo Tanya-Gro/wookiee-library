@@ -1,9 +1,9 @@
-import { URLs } from '../app/constants';
+import { LINKS } from '../app/constants';
 import type { Details, FetchError } from '../app/types';
 
 async function getDetails(id: string): Promise<Details | FetchError> {
   try {
-    const response = await fetch(`${URLs.image}${id}.json`);
+    const response = await fetch(`${LINKS.details}${id}.json`);
 
     if (!response.ok) {
       console.error(`HTTP error! Status: ${response.status}`);

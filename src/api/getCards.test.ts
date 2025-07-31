@@ -1,18 +1,15 @@
 import { isFetchError } from '../helpers/isFetchError';
 import { mockCard } from '../test-utils/mocks/cards';
+import { mockDetails } from '../test-utils/mocks/details';
 import { mockRequest, emptyMockRequest } from '../test-utils/mocks/request';
 import getCards from './getCards';
 
-vi.mock('./GetImageURL', () => ({
+vi.mock('./getDetails', () => ({
   default: vi.fn((id: string) => {
-    if (id === '1') return Promise.resolve(mockCard[0].imageURL);
-    if (id === '11') return Promise.resolve(mockCard[1].imageURL);
+    if (id === '1') return Promise.resolve(mockDetails[0]);
+    if (id === '11') return Promise.resolve(mockDetails[1]);
     return Promise.resolve(undefined);
   }),
-}));
-
-vi.mock('./GetHomeworld', () => ({
-  default: vi.fn().mockResolvedValue(mockCard[0].homeworld),
 }));
 
 const { searchQuery, currentPage } = mockRequest;

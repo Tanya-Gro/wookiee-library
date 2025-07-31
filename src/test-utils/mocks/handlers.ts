@@ -1,10 +1,11 @@
 import { http, HttpResponse } from 'msw';
-import { URLs } from '../../app/constants';
+import { LINKS } from '../../app/constants';
 import { mockResponse, mockServerError } from './response';
 import { mockRequest } from './request';
+import { mockDetails } from './details';
 
 export const handlers = [
-  http.get(URLs.people, ({ request }) => {
+  http.get(LINKS.characters, ({ request }) => {
     const url = new URL(request.url);
     const search = url.searchParams.get('search');
     const page = url.searchParams.get('page');
@@ -20,28 +21,14 @@ export const handlers = [
     return new HttpResponse(mockServerError, { status: 500 });
   }),
 
-  http.get(`${URLs.planets}:id/`, ({ request }) => {
-    const url = new URL(request.url);
-    const planetId = url.pathname.split('/').at(-2);
-
-    if (planetId) {
-      if (planetId === '1') {
-        return HttpResponse.json({ name: 'Tatooine' });
-      } else {
-        return HttpResponse.json({ name: 'N/A' });
-      }
-    }
-    return new HttpResponse(null, { status: 404 });
-  }),
-
-  http.get(`${URLs.image}:id.json`, ({ request }) => {
+  http.get(`${LINKS.details}:id.json`, ({ request }) => {
     const url = new URL(request.url);
     const lastElem = url.pathname.split('/').at(-1);
     const id = lastElem?.substring(0, lastElem.indexOf('.'));
 
     if (id) {
       if (id === mockResponse.results[0].id) {
-        return HttpResponse.json({ image: mockResponse.results[0].imageURL });
+        return HttpResponse.json(mockDetails[0]);
       }
     }
     return new HttpResponse(null, { status: 404 });

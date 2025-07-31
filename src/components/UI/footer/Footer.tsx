@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import styles from './Footer.module.css';
-import { URLs } from '../../../app/constants';
+import { LINKS } from '../../../app/constants';
 
 function Footer(): ReactNode {
   return (
@@ -9,7 +9,7 @@ function Footer(): ReactNode {
       <footer className="wrapper footer">
         <a
           className={styles.github_link}
-          href={URLs.GitHub}
+          href={LINKS.GitHub}
           target="_blank"
           aria-label="GitHub"
           rel="noreferrer"
@@ -17,7 +17,7 @@ function Footer(): ReactNode {
         <p className={styles.subtitle}>Ⓒ Tanya-Gro, 2025</p>
         <a
           className={styles.rss_link}
-          href={URLs.RSS}
+          href={LINKS.RSS}
           target="_blank"
           aria-label="RS School"
           rel="noreferrer"

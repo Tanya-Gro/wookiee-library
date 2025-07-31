@@ -15,8 +15,8 @@ const Layout: FC = () => {
           </NavLink>
         </nav>
       </header>
-      <hr />
       <main className="wrapper grow column">
+        <hr />
         <Outlet />
       </main>
     </>

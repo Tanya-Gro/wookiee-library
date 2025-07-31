@@ -1,27 +1,29 @@
-import { mockResponse } from '../test-utils/mocks/response';
+import { isFetchError } from '../helpers/isFetchError';
+import { mockDetails } from '../test-utils/mocks/details';
 import getDetails from './getDetails';
 
 describe('getDetails', () => {
-  it('should returns URL', async () => {
-    const result = await getDetails(mockResponse.results[0].id);
+  it('should return Details object', async (): Promise<void> => {
+    const result = await getDetails(String(mockDetails[0].id));
 
-    expect(result).toBe(mockResponse.results[0].imageURL);
+    expect(isFetchError(result)).toBeFalsy();
+    expect(result).toEqual(mockDetails[0]);
   });
 
-  it('returns error if fetch throws', async () => {
+  it('returns error if fetch throws', async (): Promise<void> => {
     const result = await getDetails('999');
 
-    expect(result).toBeUndefined();
+    expect(isFetchError(result)).toBeTruthy();
   });
 
-  it('returns hasError on failed response', async () => {
+  it('returns hasError on failed response', async (): Promise<void> => {
     vi.stubGlobal(
       'fetch',
       vi.fn(() => Promise.reject(new Error('Network failure')))
     );
 
-    const result = await getDetails(mockResponse.results[0].id);
+    const result = await getDetails(String(mockDetails[0].id));
 
-    expect(result).toBeUndefined();
+    expect(isFetchError(result)).toBeTruthy();
   });
 });

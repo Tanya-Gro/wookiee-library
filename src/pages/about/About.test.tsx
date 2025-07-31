@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { URLs } from '../../app/constants';
+import { LINKS } from '../../app/constants';
 import AboutPage from './About';
 
 describe('AboutPage', () => {
@@ -16,7 +16,7 @@ describe('AboutPage', () => {
     expect(screen.getByText('Tatiana Grosul')).toBeInTheDocument();
 
     const link = screen.getByRole('link', { name: /Rolling Scopes School/i });
-    expect(link).toHaveAttribute('href', URLs.RSS);
+    expect(link).toHaveAttribute('href', LINKS.RSS);
     expect(link).toHaveAttribute('target', '_blank');
     expect(link).toHaveAttribute('rel', 'noreferrer');
   });

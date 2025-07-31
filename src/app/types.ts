@@ -72,9 +72,8 @@ export type Response = {
 };
 
 export type Url = {
-  readonly people: string;
-  readonly image: string;
-  readonly planets: string;
+  readonly characters: string;
+  readonly details: string;
   readonly RSS: string;
   readonly GitHub: string;
 };
