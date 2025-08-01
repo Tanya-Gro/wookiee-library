@@ -39,16 +39,7 @@
   }
 }
 
-@keyframes fading {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.card_details p {
+.details_item {
   padding: 5px 0;
   font-size: 1.1rem;
 }
@@ -66,4 +57,10 @@
   color: var(--hover-link-color);
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   text-decoration: underline;
+}
+
+.info {
+  padding: 15px 0;
+  font-size: 2rem;
+  color: var(--primary-color);
 }

@@ -11,28 +11,21 @@ import Button from '../button/Button';
 function CardDetails(): ReactNode {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [cardDescription, setCardDescription] = useState<Details | null>(null);
 
   useEffect(() => {
     const fetchDetails = async (): Promise<void> => {
-      try {
-        setIsLoading(true);
-        const data = await getDetails(detailsId);
-        if (!isFetchError(data)) {
-          setCardDescription(data);
-        } else {
-          setErrorMessage(data.message);
-        }
-      } catch (error) {
-        setErrorMessage(String(error));
-      } finally {
-        setIsLoading(false);
+      setIsLoading(true);
+      const data = await getDetails(detailsId);
+      if (!isFetchError(data)) {
+        setCardDescription(data);
       }
+      setIsLoading(false);
     };
     fetchDetails();
   }, [detailsId]);
@@ -42,51 +35,56 @@ function CardDetails(): ReactNode {
   }
 
   if (!cardDescription) {
-    return <p className="info-message">{errorMessage} 😭</p>;
+    return (
+      <div className={styles.card_details}>
+        <p className={styles.info}>Description not found 😭</p>
+        <Button onClick={() => navigate(`?page=${page}`)}>Close</Button>
+      </div>
+    );
   }
 
   return (
     <div className={styles.card_details}>
       <h2>Details:</h2>
       <div className="wrapper column left">
-        <p>
+        <p className={styles.details_item}>
           <strong>Name:</strong> {cardDescription.name}
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Height:</strong> {cardDescription.height} m
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Mass:</strong> {cardDescription.mass} kg
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Gender:</strong> {cardDescription.gender}
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Species:</strong> {cardDescription.species}
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Skin Color:</strong> {cardDescription.skinColor}
         </p>
-        <p>
+        <p className={styles.details_item}>
           <strong>Eye Color:</strong> {cardDescription.eyeColor}
         </p>
         {cardDescription.hairColor && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Hair Color:</strong> {cardDescription.hairColor}
           </p>
         )}
-        <p>
+        <p className={styles.details_item}>
           <strong>Homeworld:</strong> {cardDescription.homeworld}
         </p>
 
-        <p>
+        <p className={styles.details_item}>
           <strong>Born:</strong> {cardDescription.born} BBY
           {cardDescription.bornLocation &&
             `, (${cardDescription.bornLocation})`}
         </p>
 
         {(cardDescription.died || cardDescription.died === 0) && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Died:</strong> {cardDescription.died} BBY
             {cardDescription.diedLocation &&
               `, (${cardDescription.diedLocation})`}
@@ -94,12 +92,12 @@ function CardDetails(): ReactNode {
         )}
 
         {cardDescription.dateCreated && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Date Created:</strong> {cardDescription.dateCreated}
           </p>
         )}
         {cardDescription.dateDestroyed && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Date Destroyed:</strong> {cardDescription.dateDestroyed}{' '}
             {cardDescription.destroyedLocation &&
               `(${cardDescription.destroyedLocation})`}
@@ -107,49 +105,49 @@ function CardDetails(): ReactNode {
         )}
 
         {cardDescription.creator && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Creator:</strong> {cardDescription.creator}
           </p>
         )}
         {cardDescription.manufacturer && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Manufacturer:</strong> {cardDescription.manufacturer}
           </p>
         )}
         {cardDescription.model && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Model:</strong> {cardDescription.model}
           </p>
         )}
         {cardDescription.productLine && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Product Line:</strong> {cardDescription.productLine}
           </p>
         )}
         {cardDescription.class && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Class:</strong> {cardDescription.class}
           </p>
         )}
         {cardDescription.cybernetics && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Cybernetics:</strong> {cardDescription.cybernetics}
           </p>
         )}
 
         {cardDescription.sensorColor && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Sensor Color:</strong> {cardDescription.sensorColor}
           </p>
         )}
         {cardDescription.platingColor && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Plating Color:</strong> {cardDescription.platingColor}
           </p>
         )}
 
         {cardDescription.equipment && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Equipment:</strong>{' '}
             {Array.isArray(cardDescription.equipment)
               ? cardDescription.equipment.join(', ')
@@ -158,7 +156,7 @@ function CardDetails(): ReactNode {
         )}
 
         {cardDescription.masters && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Masters:</strong>{' '}
             {Array.isArray(cardDescription.masters)
               ? cardDescription.masters.join(', ')
@@ -167,20 +165,20 @@ function CardDetails(): ReactNode {
         )}
 
         {cardDescription.apprentices?.length && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Apprentices:</strong>{' '}
             {cardDescription.apprentices.join(', ')}
           </p>
         )}
 
         {cardDescription.affiliations.length > 0 && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Affiliations:</strong>{' '}
             {cardDescription.affiliations.join(', ')}
           </p>
         )}
         {cardDescription.formerAffiliations.length > 0 && (
-          <p>
+          <p className={styles.details_item}>
             <strong>Former Affiliations:</strong>{' '}
             {cardDescription.formerAffiliations.join(', ')}
           </p>
