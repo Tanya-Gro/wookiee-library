@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react';
+import { useState, type ChangeEvent, type FC } from 'react';
 import Button from './UI/button/Button';
 
 type SearchFormProps = {
@@ -7,44 +7,37 @@ type SearchFormProps = {
   onSearchQueryChange: (searchQuery: string) => void;
 };
 
-type SearchFormState = {
-  searchQuery: string;
-};
+const SearchForm: FC<SearchFormProps> = ({
+  searchQuery,
+  isLoading,
+  onSearchQueryChange,
+}: SearchFormProps) => {
+  const [inputValue, setInputValue] = useState(searchQuery);
 
-export default class SearchForm extends Component<
-  SearchFormProps,
-  SearchFormState
-> {
-  state = {
-    searchQuery: this.props.searchQuery,
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputValue(e.target.value);
   };
 
-  render(): ReactNode {
-    const { searchQuery } = this.state;
-    const isLoading = this.props.isLoading;
+  const handleSearch = (): void => {
+    onSearchQueryChange(inputValue.trim());
+  };
 
-    return (
-      <div className="wrapper" data-testid="search-form">
-        <input
-          type="text"
-          value={searchQuery}
-          name="SearchInput"
-          className="input search_input"
-          disabled={isLoading}
-          placeholder="Looking for..."
-          onChange={(e): void => {
-            this.setState({ searchQuery: e.target.value });
-          }}
-        />
-        <Button
-          disabled={isLoading}
-          onClick={() => {
-            this.props.onSearchQueryChange(searchQuery.trim());
-          }}
-        >
-          Search images
-        </Button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="wrapper" data-testid="search-form">
+      <input
+        type="text"
+        value={inputValue}
+        name="SearchInput"
+        className="input search_input"
+        disabled={isLoading}
+        placeholder="Looking for..."
+        onChange={handleInputChange}
+      />
+      <Button disabled={isLoading} onClick={handleSearch}>
+        Search images
+      </Button>
+    </div>
+  );
+};
+
+export default SearchForm;

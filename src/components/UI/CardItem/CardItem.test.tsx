@@ -7,7 +7,7 @@ describe('CardItem', () => {
   const ROLE_OPTIONS = { name: mockCard[0].name };
 
   it('render card elements', () => {
-    render(<CardItem card={mockCard[0]} />);
+    render(<CardItem card={mockCard[0]} onClick={() => {}} />);
 
     const image = screen.getByRole('img', ROLE_OPTIONS);
     expect(image).toBeInTheDocument();
@@ -18,15 +18,5 @@ describe('CardItem', () => {
     const name = screen.getByRole('heading', ROLE_OPTIONS);
     expect(name).toBeInTheDocument();
     expect(name).toHaveClass(styles.title);
-
-    const birthYear = screen.getByTestId('birth-year');
-    expect(birthYear).toBeInTheDocument();
-    expect(birthYear).toHaveClass(styles.info);
-    expect(birthYear).toHaveTextContent(mockCard[0].birth_year);
-
-    const homeWorld = screen.getByTestId('home-world');
-    expect(homeWorld).toBeInTheDocument();
-    expect(homeWorld).toHaveClass(styles.info);
-    expect(homeWorld).toHaveTextContent(mockCard[0].homeworld);
   });
 });

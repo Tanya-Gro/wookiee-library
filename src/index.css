@@ -1,6 +1,7 @@
 :root {
   --primary-color: rgb(20, 44, 97);
   --background-color: rgba(103, 129, 129, 0.3);
+  --hover-link-color: blueviolet;
 }
 
 * {
@@ -17,6 +18,18 @@ body {
   background-image: url(/rm309-adj-14.jpg);
 }
 
+#root {
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 10px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .wrapper {
   max-width: 1000px;
   display: flex;
@@ -26,12 +39,22 @@ body {
   width: 100%;
 }
 
+.grow {
+  flex-grow: 1;
+}
+
 .center {
   justify-content: center;
+  align-items: center;
 }
 
 .right {
   justify-content: end;
+}
+
+.left {
+  align-items: start;
+  text-align: start;
 }
 
 .card-list {
@@ -40,6 +63,7 @@ body {
   flex-grow: 1;
   justify-content: center;
   gap: 15px;
+  width: calc(100% - 250px);
 }
 
 .column {
@@ -59,7 +83,7 @@ body {
 }
 
 .material-symbols-outlined:hover {
-  color: blueviolet;
+  color: var(--hover-link-color);
 }
 
 .info-message {
@@ -85,4 +109,25 @@ body {
   text-align: center;
   color: var(--primary-color);
   user-select: none;
+}
+
+.link {
+  text-decoration: none;
+  padding: 0 10px;
+  font-size: 2rem;
+  color: var(--primary-color);
+  transition: text-shadow 0.3s ease;
+}
+
+.link:hover {
+  color: var(--hover-link-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  text-decoration: underline;
+}
+
+.header,
+.footer {
+  height: 60px;
+  padding: 10px 20px 0 20px;
+  align-items: center;
 }

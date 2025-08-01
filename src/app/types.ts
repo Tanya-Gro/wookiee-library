@@ -19,6 +19,41 @@ export type Card = {
   imageURL: string;
 };
 
+export type Details = {
+  id: number;
+  name: string;
+  height: number;
+  mass: number;
+  gender: string;
+  homeworld: string;
+  wiki: string;
+  image: string;
+  born: number;
+  bornLocation?: string;
+  died?: number;
+  diedLocation?: string;
+  dateCreated?: number;
+  dateDestroyed?: number;
+  destroyedLocation?: string;
+  creator?: string;
+  manufacturer?: string;
+  model?: string;
+  productLine?: string;
+  class?: string;
+  species: string;
+  hairColor?: string;
+  eyeColor?: string;
+  skinColor: string;
+  cybernetics?: string;
+  sensorColor?: string;
+  platingColor?: string;
+  equipment?: string[] | string;
+  affiliations: string[];
+  formerAffiliations: string[];
+  masters?: string[] | string;
+  apprentices?: string[];
+};
+
 export type DataType = {
   cards: Card[];
   pageCount: number;
@@ -37,7 +72,8 @@ export type Response = {
 };
 
 export type Url = {
-  readonly people: string;
-  readonly image: string;
-  readonly planets: string;
+  readonly characters: string;
+  readonly details: string;
+  readonly RSS: string;
+  readonly GitHub: string;
 };

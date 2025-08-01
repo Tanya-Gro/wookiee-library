@@ -1,115 +1,29 @@
-import type { Card } from './app/types';
+import type { ReactNode } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import Layout from './components/UI/layout/Layout';
+import HomePage from './pages/home/Home';
+import NotFoundPage from './pages/404/NotFound';
+import AboutPage from './pages/about/About';
+import CardDetails from './components/UI/CardDetails/CardDetails';
 
-import { Component, type ReactNode } from 'react';
-import SearchForm from './components/SearchForm';
-import CardForm from './components/CardForm';
-import Button from './components/UI/button/Button';
-import Pagination from './components/Pagination';
-import Loader from './components/UI/loader/Loader';
-import getCards from './api/getCards';
-import { isFetchError } from './helpers/isFetchError';
-import './App.css';
+function App(): ReactNode {
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Navigate to="/home" replace />} />
 
-type AppState = {
-  searchQuery: string;
-  currentPage: number;
-  pageCount: number;
-  isLoading: boolean;
-  hasError: boolean;
-  errorMessage: string;
-  cards: Card[];
-};
+          <Route path="home" element={<HomePage />}>
+            <Route path="" element={<CardDetails />} />
+          </Route>
 
-class App extends Component<object, AppState> {
-  state = {
-    searchQuery: localStorage.getItem('searchQuery') || '',
-    currentPage: 1,
-    pageCount: 1,
-    isLoading: false,
-    hasError: false,
-    errorMessage: '',
-    cards: [],
-  };
+          <Route path="about" element={<AboutPage />} />
 
-  handleSearchChange = (query: string): void => {
-    this.setState({ searchQuery: query, currentPage: 1 });
-    localStorage.setItem('searchQuery', query);
-  };
-
-  handlePageChange = (page: number): void => {
-    this.setState({ currentPage: page });
-  };
-
-  async componentDidMount(): Promise<void> {
-    this.setState({ isLoading: true });
-    const data = await getCards(this.state.searchQuery, this.state.currentPage);
-
-    if (!isFetchError(data)) {
-      this.setState({
-        cards: data.cards,
-        pageCount: data.pageCount,
-        isLoading: false,
-        hasError: false,
-      });
-    } else {
-      this.setState({
-        hasError: true,
-        errorMessage: data.message,
-        isLoading: false,
-      });
-    }
-  }
-
-  componentDidUpdate(_: object, prevState: AppState): void {
-    const { searchQuery, currentPage } = this.state;
-    if (
-      prevState.searchQuery !== searchQuery ||
-      prevState.currentPage !== currentPage
-    ) {
-      this.componentDidMount();
-    }
-  }
-
-  render(): ReactNode {
-    const {
-      searchQuery,
-      currentPage,
-      pageCount,
-      cards,
-      isLoading,
-      errorMessage,
-      hasError,
-    } = this.state;
-
-    if (hasError) {
-      throw new Error(errorMessage);
-    }
-    return (
-      <>
-        <SearchForm
-          searchQuery={searchQuery}
-          isLoading={isLoading}
-          onSearchQueryChange={this.handleSearchChange}
-        />
-        {isLoading ? <Loader /> : <CardForm cards={cards} />}
-        <Pagination
-          currentPage={currentPage}
-          pageCount={pageCount}
-          onPageChange={this.handlePageChange}
-          isLoading={isLoading}
-        />
-        <div className="wrapper right">
-          <Button
-            onClick={() => {
-              this.setState({ hasError: true, errorMessage: 'Test error' });
-            }}
-          >
-            Throw error
-          </Button>
-        </div>
-      </>
-    );
-  }
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+    </>
+  );
 }
 
 export default App;
