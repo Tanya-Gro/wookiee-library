@@ -13,7 +13,7 @@ import useLocalStorage from '../../hooks/useLocalStorage';
 const HomePage = (): ReactNode => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState<number>(
-    parseInt(searchParams.get('page') || '1', 10)
+    Number(searchParams.get('page')) || 1
   );
   const [pageCount, setPageCount] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -22,13 +22,13 @@ const HomePage = (): ReactNode => {
   const [cards, setCards] = useState<Card[]>([]);
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
 
-  const page = searchParams.get('page');
-
   useEffect(() => {
-    if (page !== null && currentPage !== +page) {
+    if (currentPage !== Number(searchParams.get('page'))) {
       setSearchParams({ page: currentPage.toString() });
     }
+  }, [currentPage, searchParams, setSearchParams]);
 
+  useEffect(() => {
     const getData = async (): Promise<void> => {
       setIsLoading(true);
       const data = await getCards(searchQuery, currentPage);
@@ -36,16 +36,15 @@ const HomePage = (): ReactNode => {
       if (!isFetchError(data)) {
         setCards(data.cards);
         setPageCount(data.pageCount);
-        setIsLoading(false);
         setHasError(false);
       } else {
-        setHasError(true);
         setErrorMessage(data.message);
-        setIsLoading(false);
+        setHasError(true);
       }
+      setIsLoading(false);
     };
     getData();
-  }, [searchQuery, currentPage, setSearchParams, page]);
+  }, [searchQuery, currentPage]);
 
   const handleSearchChange = (query: string): void => {
     setSearchQuery(query);
