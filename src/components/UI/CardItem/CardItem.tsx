@@ -1,19 +1,29 @@
 import type { Card } from '../../../app/types';
-import type { FC, ReactNode } from 'react';
+import type { FC, MouseEvent, ReactNode } from 'react';
 
 import styles from './CardItem.module.css';
 
 type CardItemProps = {
   card: Pick<Card, 'imageURL' | 'name'>;
-  onClick: () => void;
+  onClickCard: () => void;
+  onToggleCheckbox: (event: MouseEvent<HTMLInputElement>) => void;
+  isChecked: boolean;
 };
 
 const CardItem: FC<CardItemProps> = ({
   card: { imageURL, name },
-  onClick,
+  onClickCard,
+  onToggleCheckbox,
+  isChecked,
 }): ReactNode => {
   return (
-    <div className={styles.card} onClick={onClick} data-testid="card">
+    <div className={styles.card} onClick={onClickCard} data-testid="card">
+      <input
+        type="checkbox"
+        checked={isChecked}
+        className={styles.checkbox}
+        onClick={onToggleCheckbox}
+      />
       <img src={imageURL} alt={name} className={styles.img} />
       <h3 className={styles.title}>{name}</h3>
     </div>

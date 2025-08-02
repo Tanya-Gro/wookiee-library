@@ -3,6 +3,7 @@ import type { FC, ReactNode } from 'react';
 
 import CardItem from './UI/CardItem/CardItem';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { useCheckListStore } from '../store/useCheckList';
 
 type CardFormProps = {
   cards: Card[];
@@ -16,6 +17,9 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
+  const selectedCardIds = useCheckListStore((state) => state.selectedIds);
+  const toggleCheckedCard = useCheckListStore((state) => state.toggleId);
+
   return (
     <>
       <hr />
@@ -26,7 +30,12 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
               <CardItem
                 card={card}
                 key={card.id}
-                onClick={() => navigate(`?page=${page}&details=${card.id}`)}
+                onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
+                onToggleCheckbox={(event) => {
+                  event.stopPropagation();
+                  toggleCheckedCard(card.id);
+                }}
+                isChecked={selectedCardIds.includes(card.id)}
               />
             ))
           ) : (

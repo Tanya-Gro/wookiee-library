@@ -6,7 +6,9 @@
   transition: transform 0.5s ease;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   background-color: var(--background-color);
+  cursor: pointer;
 
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -47,4 +49,43 @@
   margin-top: 5px;
   margin-bottom: 0;
   font-weight: 500;
+}
+
+.checkbox {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 10;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+
+  appearance: none;
+  background-color: white;
+  border: 2px solid var(--primary-color);
+
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    border-radius 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.checkbox:checked {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+}
+
+.checkbox:checked::after {
+  content: '\2714';
+  font-size: 3rem;
+  color: var(--primary-color);
+
+  position: absolute;
+  top: -8px;
+  left: 0px;
 }
