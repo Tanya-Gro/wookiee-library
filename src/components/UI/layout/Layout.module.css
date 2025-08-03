@@ -33,3 +33,17 @@
 .dark:hover {
   color: yellow;
 }
+
+.link {
+  text-decoration: none;
+  padding: 0 10px;
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  transition: text-shadow 0.3s ease;
+}
+
+.link:hover {
+  color: var(--hover-link-color);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  text-decoration: underline;
+}
