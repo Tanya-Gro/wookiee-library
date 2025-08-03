@@ -5,10 +5,15 @@ interface ThemeStore {
   toggleTheme: () => void;
 }
 
+const LS_KEY = 'isLightTheme';
+const stored = localStorage.getItem(LS_KEY);
+const theme: boolean = stored ? JSON.parse(stored) : true;
+
 export const useThemeStore = create<ThemeStore>((set) => ({
-  isLight: true,
+  isLight: theme,
   toggleTheme: (): void =>
-    set((state) => ({
-      isLight: !state.isLight,
-    })),
+    set((state) => {
+      localStorage.setItem(LS_KEY, JSON.stringify(!state.isLight));
+      return { isLight: !state.isLight };
+    }),
 }));
