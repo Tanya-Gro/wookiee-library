@@ -7,7 +7,14 @@ describe('CardItem', () => {
   const ROLE_OPTIONS = { name: mockCard[0].name };
 
   it('render card elements', () => {
-    render(<CardItem card={mockCard[0]} onClick={() => {}} />);
+    render(
+      <CardItem
+        card={mockCard[0]}
+        onClickCard={() => {}}
+        onToggleCheckbox={() => {}}
+        isChecked={false}
+      />
+    );
 
     const image = screen.getByRole('img', ROLE_OPTIONS);
     expect(image).toBeInTheDocument();

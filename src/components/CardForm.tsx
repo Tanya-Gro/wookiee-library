@@ -5,6 +5,7 @@ import CardItem from './UI/CardItem/CardItem';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCheckListStore } from '../store/useCheckList';
 import Button from './UI/button/Button';
+import { handleDownload } from '../helpers/handleDownload';
 
 type CardFormProps = {
   cards: Card[];
@@ -21,6 +22,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const selectedCardIds = useCheckListStore((state) => state.selectedIds);
   const toggleCheckedCard = useCheckListStore((state) => state.toggleId);
   const deleteCheckedCard = useCheckListStore((state) => state.deleteIds);
+
   return (
     <>
       <hr />
@@ -53,6 +55,9 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
               Selected {selectedCardIds.length} cards
             </span>
             <Button onClick={() => deleteCheckedCard()}>Unselect All</Button>
+            <Button onClick={() => handleDownload(selectedCardIds)}>
+              Download
+            </Button>
           </div>
         </>
       ) : (
