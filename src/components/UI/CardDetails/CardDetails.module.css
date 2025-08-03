@@ -42,6 +42,7 @@
 .details_item {
   padding: 5px 0;
   font-size: 1.1rem;
+  color: var(--primary-color);
 }
 
 .link {

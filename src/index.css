@@ -1,7 +1,20 @@
 :root {
   --primary-color: rgb(20, 44, 97);
+  --light-primary-background-color: rgba(93, 144, 161, 0.4);
+  --dark-primary-color: rgb(20, 44, 97);
   --background-color: rgba(103, 129, 129, 0.3);
+  --disable-color: rgb(150, 170, 196);
   --hover-link-color: blueviolet;
+  --bg-image: url('/rm309-adj-14.jpg');
+}
+
+[data-theme='dark'] {
+  --primary-color: rgb(240, 240, 240);
+  --light-primary-background-color: rgb(47, 13, 32);
+  --background-color: rgb(20, 20, 20);
+  --disable-color: rgb(90, 75, 75);
+  --hover-link-color: lightblue;
+  --bg-image: url('/bg-dark.jpg');
 }
 
 * {
@@ -15,7 +28,11 @@ html {
 }
 
 body {
-  background-image: url(/rm309-adj-14.jpg);
+  background-image: var(--bg-image);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 #root {
@@ -28,6 +45,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+h2,
+a {
+  color: var(--primary-color);
 }
 
 .wrapper {
@@ -74,16 +96,18 @@ body {
   cursor: pointer;
   transition: color 0.3s ease;
   user-select: none;
+  color: var(--primary-color);
 }
 
 .material-symbols-outlined.disabled {
   pointer-events: none;
   cursor: auto;
-  color: lightsteelblue;
+  color: var(--disable-color);
 }
 
 .material-symbols-outlined:hover {
   color: var(--hover-link-color);
+  transform: scale(1.2);
 }
 
 .info-message {
@@ -130,4 +154,5 @@ body {
   height: 60px;
   padding: 10px 20px 0 20px;
   align-items: center;
+  color: var(--primary-color);
 }

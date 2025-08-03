@@ -1,0 +1,35 @@
+.theme_switch {
+  width: 80px;
+  height: 33px;
+  padding: 2px;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
+  background-color: var(--light-primary-background-color);
+  transition:
+    color 0.4s,
+    transform 0.6s;
+}
+
+.theme_switch:hover {
+  transform: scale(1.02);
+  color: var(--hover-link-color);
+  box-shadow: 2px 2px 5px var(--primary-color);
+}
+
+.light {
+  color: yellow;
+  text-align: start;
+}
+
+.light:hover {
+  color: var(--primary-color);
+}
+
+.dark {
+  color: var(--primary-color);
+  text-align: end;
+}
+
+.dark:hover {
+  color: yellow;
+}

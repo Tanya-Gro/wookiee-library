@@ -21,7 +21,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
 
   const selectedCardIds = useCheckListStore((state) => state.selectedIds);
   const toggleCheckedCard = useCheckListStore((state) => state.toggleId);
-  const deleteCheckedCard = useCheckListStore((state) => state.deleteIds);
+  const clearCheckedCards = useCheckListStore((state) => state.deleteIds);
 
   return (
     <>
@@ -54,7 +54,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
             <span className="info-message">
               Selected {selectedCardIds.length} cards
             </span>
-            <Button onClick={() => deleteCheckedCard()}>Unselect All</Button>
+            <Button onClick={clearCheckedCards}>Unselect All</Button>
             <Button onClick={() => handleDownload(selectedCardIds)}>
               Download
             </Button>
