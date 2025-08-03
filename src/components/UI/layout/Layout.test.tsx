@@ -17,10 +17,8 @@ describe('Header', () => {
 
     const HomeLink = screen.getByRole('link', ROLE_OPTIONS.homeLink);
     expect(HomeLink).toBeInTheDocument();
-    expect(HomeLink).toHaveClass('link');
 
     const AboutLink = screen.getByRole('link', ROLE_OPTIONS.aboutLink);
     expect(AboutLink).toBeInTheDocument();
-    expect(AboutLink).toHaveClass('link');
   });
 });

@@ -1,11 +1,12 @@
 import type { Card } from '../app/types';
 import type { FC, ReactNode } from 'react';
 
-import CardItem from './UI/CardItem/CardItem';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCheckListStore } from '../store/useCheckList';
-import Button from './UI/button/Button';
 import { handleDownload } from '../helpers/handleDownload';
+import CardItem from './UI/CardItem/CardItem';
+import Button from './UI/button/Button';
+import buttonStyles from './UI/button/Button.module.css';
 
 type CardFormProps = {
   cards: Card[];
@@ -19,9 +20,9 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
-  const selectedCardIds = useCheckListStore((state) => state.selectedIds);
-  const toggleCheckedCard = useCheckListStore((state) => state.toggleId);
-  const clearCheckedCards = useCheckListStore((state) => state.deleteIds);
+  const selectedCards = useCheckListStore((state) => state.selectedCards);
+  const toggleCheckedCard = useCheckListStore((state) => state.toggleCard);
+  const clearCheckedCards = useCheckListStore((state) => state.deleteCards);
 
   return (
     <>
@@ -36,9 +37,11 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
                 onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
                 onToggleCheckbox={(event) => {
                   event.stopPropagation();
-                  toggleCheckedCard(card.id);
+                  toggleCheckedCard(card);
                 }}
-                isChecked={selectedCardIds.includes(card.id)}
+                isChecked={selectedCards.some(
+                  (existingCard) => existingCard.id === card.id
+                )}
               />
             ))
           ) : (
@@ -47,17 +50,21 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
         </div>
         {detailsId && <Outlet />}
       </div>
-      {selectedCardIds.length > 0 ? (
+      {selectedCards.length > 0 ? (
         <>
           <hr />
           <div className="wrapper">
             <span className="info-message">
-              Selected {selectedCardIds.length} cards
+              Selected {selectedCards.length} cards
             </span>
             <Button onClick={clearCheckedCards}>Unselect All</Button>
-            <Button onClick={() => handleDownload(selectedCardIds)}>
+            <a
+              className={buttonStyles.button}
+              href={handleDownload(selectedCards)}
+              download={`${selectedCards.length}_wookiee_cards.csv`}
+            >
               Download
-            </Button>
+            </a>
           </div>
         </>
       ) : (

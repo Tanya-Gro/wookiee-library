@@ -7,6 +7,7 @@
   color: var(--primary-color);
   transition: background-color 0.3s ease;
   background-color: var(--light-primary-background-color);
+  text-decoration: none;
 }
 
 .button:hover {
