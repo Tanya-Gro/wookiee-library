@@ -23,6 +23,7 @@ const CardItem: FC<CardItemProps> = ({
         checked={isChecked}
         className={styles.checkbox}
         onClick={onToggleCheckbox}
+        readOnly
       />
       <img src={imageURL} alt={name} className={styles.img} />
       <h3 className={styles.title}>{name}</h3>
