@@ -1,17 +1,11 @@
-import { useEffect, type FC } from 'react';
+import type { FC } from 'react';
 
 import { NavLink, Outlet } from 'react-router-dom';
-import { useThemeStore } from '../../../store/useTheme';
+import { useTheme } from '../../../context/theme';
 import styles from './Layout.module.css';
 
 const Layout: FC = () => {
-  const isLightTheme = useThemeStore((state) => state.isLight);
-  const toggleTheme = useThemeStore((state) => state.toggleTheme);
-
-  useEffect(() => {
-    const theme = isLightTheme ? 'light' : 'dark';
-    document.body.setAttribute('data-theme', theme);
-  }, [isLightTheme]);
+  const { isLightTheme, toggleTheme } = useTheme();
 
   return (
     <>
