@@ -16,13 +16,12 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
-  const selectedCards = useCheckListStore((state) => state.selectedCards);
-  const toggleCheckedCard = useCheckListStore((state) => state.toggleCard);
-  const clearCheckedCards = useCheckListStore((state) => state.deleteCards);
+  const { selectedCards, toggleCard, deleteCards } = useCheckListStore(
+    (state) => state
+  );
 
   return (
     <>
@@ -37,7 +36,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
                 onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
                 onToggleCheckbox={(event) => {
                   event.stopPropagation();
-                  toggleCheckedCard(card);
+                  toggleCard(card);
                 }}
                 isChecked={selectedCards.some(
                   (existingCard) => existingCard.id === card.id
@@ -57,7 +56,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
             <span className="info-message">
               Selected {selectedCards.length} cards
             </span>
-            <Button onClick={clearCheckedCards}>Unselect All</Button>
+            <Button onClick={deleteCards}>Unselect All</Button>
             <a
               className={buttonStyles.button}
               href={handleDownload(selectedCards)}
