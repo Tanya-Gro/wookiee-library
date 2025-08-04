@@ -17,10 +17,20 @@ const Layout: FC = () => {
     <>
       <header className="wrapper header">
         <nav>
-          <NavLink to="/home" className={styles.link}>
+          <NavLink
+            to="/home"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ''}`
+            }
+          >
             Home
           </NavLink>
-          <NavLink to="/about" className={styles.link}>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `${styles.link} ${isActive ? styles.active : ''}`
+            }
+          >
             About
           </NavLink>
         </nav>
