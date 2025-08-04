@@ -20,7 +20,7 @@ const Layout: FC = () => {
           <NavLink
             to="/home"
             className={({ isActive }) =>
-              `${styles.link} ${isActive ? styles.active : ''}`
+              `${styles.link} ${isActive && styles.active}`
             }
           >
             Home
@@ -28,7 +28,7 @@ const Layout: FC = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              `${styles.link} ${isActive ? styles.active : ''}`
+              `${styles.link} ${isActive && styles.active}`
             }
           >
             About

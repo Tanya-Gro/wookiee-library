@@ -50,7 +50,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
         </div>
         {detailsId && <Outlet />}
       </div>
-      {selectedCards.length > 0 ? (
+      {selectedCards.length > 0 && (
         <>
           <hr />
           <div className="wrapper">
@@ -67,8 +67,6 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
             </a>
           </div>
         </>
-      ) : (
-        ''
       )}
     </>
   );

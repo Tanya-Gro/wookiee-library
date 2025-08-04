@@ -18,7 +18,7 @@ const Pagination: FC<PaginationProps> = ({
       <hr />
       <div className="wrapper center" data-testid="pagination">
         <span
-          className={`material-symbols-outlined ${currentPage === 1 || isLoading ? 'disabled' : ''}`}
+          className={`material-symbols-outlined ${(currentPage === 1 || isLoading) && 'disabled'}`}
           onClick={() => {
             if (currentPage === 1 || isLoading) {
               return;
@@ -36,7 +36,7 @@ const Pagination: FC<PaginationProps> = ({
           disabled
         />
         <span
-          className={`material-symbols-outlined ${currentPage === pageCount || isLoading ? 'disabled' : ''}`}
+          className={`material-symbols-outlined ${(currentPage === pageCount || isLoading) && 'disabled'}`}
           onClick={() => {
             if (currentPage === pageCount || isLoading) {
               return;
