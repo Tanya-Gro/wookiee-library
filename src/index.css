@@ -4,6 +4,7 @@
   --dark-primary-color: rgb(20, 44, 97);
   --background-color: rgba(103, 129, 129, 0.3);
   --disable-color: 150, 170, 196;
+  --shadow: 0, 0, 0;
   --hover-link-color: rgb(100, 60, 136);
   --bg-image: url('/rm309-adj-14.jpg');
 }
@@ -13,6 +14,7 @@
   --light-primary-background-color: rgb(47, 13, 32);
   --background-color: rgb(20, 20, 20);
   --disable-color: 90, 75, 75;
+  --shadow: 255, 255, 255;
   --hover-link-color: lightblue;
   --bg-image: url('/bg-dark.jpg');
 }
