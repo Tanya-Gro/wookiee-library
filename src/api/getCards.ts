@@ -10,9 +10,11 @@ async function getCards(
   currentPage: number
 ): Promise<DataType | FetchError> {
   try {
-    const response = await fetch(
-      `${LINKS.characters}?${searchQuery && `search=${searchQuery}&`}page=${currentPage}`
-    );
+    const url = new URL(LINKS.characters);
+    url.searchParams.set('search', searchQuery);
+    url.searchParams.set('page', currentPage.toString());
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       return { hasError: true, message: `${response.status}` };
@@ -23,7 +25,7 @@ async function getCards(
     const cardsWithImagesHomes: Card[] = await Promise.all(
       data.results.map(async (card: Card) => {
         const id = getID(card.url);
-        const details = (id && (await getDetails(id))) || '';
+        const details = id ? await getDetails(id) : '';
         const imageURL = details && !isFetchError(details) ? details.image : '';
         return {
           ...card,
