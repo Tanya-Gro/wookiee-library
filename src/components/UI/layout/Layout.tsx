@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useTheme } from '../../../context/theme';
 import styles from './Layout.module.css';
+import classNames from 'classnames';
 
 const Layout: FC = () => {
   const { isLightTheme, toggleTheme } = useTheme();
@@ -14,7 +15,7 @@ const Layout: FC = () => {
           <NavLink
             to="/home"
             className={({ isActive }) =>
-              `${styles.link} ${isActive && styles.active}`
+              classNames(styles.link, { [styles.active]: isActive })
             }
           >
             Home
@@ -22,7 +23,7 @@ const Layout: FC = () => {
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              `${styles.link} ${isActive && styles.active}`
+              classNames(styles.link, { [styles.active]: isActive })
             }
           >
             About
@@ -30,7 +31,14 @@ const Layout: FC = () => {
         </nav>
 
         <span
-          className={`material-symbols-outlined ${styles.theme_switch} ${isLightTheme ? styles.light : styles.dark}`}
+          className={classNames(
+            'material-symbols-outlined',
+            styles.theme_switch,
+            {
+              [styles.light]: isLightTheme,
+              [styles.dark]: !isLightTheme,
+            }
+          )}
           onClick={toggleTheme}
           title="Toggle theme"
           role="button"
