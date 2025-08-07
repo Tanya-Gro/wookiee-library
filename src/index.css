@@ -117,7 +117,7 @@ a {
 .material-symbols-outlined.disabled {
   pointer-events: none;
   cursor: auto;
-  color: var(--disable-color);
+  color: rgb(var(--disable-color));
 }
 
 .material-symbols-outlined:hover {
