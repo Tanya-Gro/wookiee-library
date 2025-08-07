@@ -16,7 +16,7 @@
   border-radius: 10px;
   transition: transform 0.5s ease;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  background-color: var(--disable-color);
+  background-color: rgba(var(--disable-color), 0.8);
 }
 
 .link {
