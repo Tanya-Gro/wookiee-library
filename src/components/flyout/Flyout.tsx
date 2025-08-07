@@ -5,6 +5,7 @@ import { useCheckListStore } from '../../store/useCheckList';
 import Button from '../UI/button/Button';
 import buttonStyles from '../UI/button/Button.module.css';
 import styles from './flyout.module.css';
+import classNames from 'classnames';
 
 const Flyout = (): ReactNode => {
   const { selectedCards, deleteCards } = useCheckListStore((state) => state);
@@ -16,7 +17,7 @@ const Flyout = (): ReactNode => {
       </span>
       <Button onClick={deleteCards}>Unselect All</Button>
       <a
-        className={buttonStyles.button + ' ' + styles.link}
+        className={classNames(buttonStyles.button, styles.link)}
         href={handleDownload(selectedCards)}
         download={`${selectedCards.length}_wookiee_cards.csv`}
       >
