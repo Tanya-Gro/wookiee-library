@@ -1,12 +1,19 @@
-import { useEffect, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
+
+import { useEffect } from 'react';
 import { ThemeContext } from './theme';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import useLocalStorage from '../hooks/useLocalStorage';
 
-interface IThemeProvider {
+interface IProviders {
   children: ReactNode;
 }
 
-export const ThemeProvider = ({ children }: IThemeProvider): ReactNode => {
+const queryClient = new QueryClient();
+
+export const Providers = ({ children }: IProviders): ReactNode => {
   const [isLightTheme, setIsLightTheme] = useLocalStorage('isLight', true);
   const toggleTheme = (): void => setIsLightTheme(!isLightTheme);
 
@@ -16,7 +23,10 @@ export const ThemeProvider = ({ children }: IThemeProvider): ReactNode => {
 
   return (
     <ThemeContext.Provider value={{ isLightTheme, toggleTheme }}>
-      {children}
+      <QueryClientProvider client={queryClient}>
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </ThemeContext.Provider>
   );
 };
