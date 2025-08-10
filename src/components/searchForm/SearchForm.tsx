@@ -3,6 +3,7 @@ import type { ChangeEvent, FC } from 'react';
 import { useState } from 'react';
 
 import Button from '../UI/button/Button';
+import { useQueryClient } from '@tanstack/react-query';
 
 type SearchFormProps = {
   searchQuery: string;
@@ -25,6 +26,8 @@ const SearchForm: FC<SearchFormProps> = ({
     onSearchQueryChange(inputValue.trim());
   };
 
+  const queryClient = useQueryClient();
+
   return (
     <div className="wrapper" data-testid="search-form">
       <input
@@ -38,6 +41,13 @@ const SearchForm: FC<SearchFormProps> = ({
       />
       <Button disabled={isLoading} onClick={handleSearch}>
         Search images
+      </Button>
+      <Button
+        onClick={() =>
+          queryClient.invalidateQueries({ queryKey: ['cards', searchQuery] })
+        }
+      >
+        Refresh
       </Button>
     </div>
   );
