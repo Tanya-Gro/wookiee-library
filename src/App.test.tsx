@@ -1,9 +1,11 @@
 import type { DataType } from './app/types';
 
-import App from './App';
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { mockCard } from './test-utils/mocks/cards';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+import App from './App';
 
 vi.mock('./api/getCards', () => ({
   default: async (): Promise<DataType> => ({
@@ -13,18 +15,38 @@ vi.mock('./api/getCards', () => ({
 }));
 
 describe('App', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
   it('app has home page', async () => {
     render(
       <MemoryRouter initialEntries={['/home']}>
-        <App />
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
       </MemoryRouter>
     );
     expect(screen.getByRole('navigation')).toBeInTheDocument();
     expect(screen.getByTestId('search-form')).toBeInTheDocument();
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
-    expect(screen.getByTestId('pagination')).toBeInTheDocument();
 
     expect(await screen.findByTestId('card-form')).toBeInTheDocument();
+
+    expect(screen.getByTestId('pagination')).toBeInTheDocument();
   });
 
   it('app has AboutPage', () => {
