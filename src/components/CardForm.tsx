@@ -3,10 +3,9 @@ import type { FC, ReactNode } from 'react';
 
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCheckListStore } from '../store/useCheckList';
-import { handleDownload } from '../helpers/handleDownload';
 import CardItem from './UI/CardItem/CardItem';
-import Button from './UI/button/Button';
-import buttonStyles from './UI/button/Button.module.css';
+
+import Flyout from './flyout/Flyout';
 
 type CardFormProps = {
   cards: Card[];
@@ -16,13 +15,10 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
-  const selectedCards = useCheckListStore((state) => state.selectedCards);
-  const toggleCheckedCard = useCheckListStore((state) => state.toggleCard);
-  const clearCheckedCards = useCheckListStore((state) => state.deleteCards);
+  const { selectedCards, toggleCard } = useCheckListStore((state) => state);
 
   return (
     <>
@@ -37,7 +33,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
                 onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
                 onToggleCheckbox={(event) => {
                   event.stopPropagation();
-                  toggleCheckedCard(card);
+                  toggleCard(card);
                 }}
                 isChecked={selectedCards.some(
                   (existingCard) => existingCard.id === card.id
@@ -50,26 +46,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
         </div>
         {detailsId && <Outlet />}
       </div>
-      {selectedCards.length > 0 ? (
-        <>
-          <hr />
-          <div className="wrapper">
-            <span className="info-message">
-              Selected {selectedCards.length} cards
-            </span>
-            <Button onClick={clearCheckedCards}>Unselect All</Button>
-            <a
-              className={buttonStyles.button}
-              href={handleDownload(selectedCards)}
-              download={`${selectedCards.length}_wookiee_cards.csv`}
-            >
-              Download
-            </a>
-          </div>
-        </>
-      ) : (
-        ''
-      )}
+      {selectedCards.length > 0 && <Flyout />}
     </>
   );
 };

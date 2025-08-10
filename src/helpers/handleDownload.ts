@@ -4,9 +4,7 @@ export const handleDownload = (selectedCards: Card[]): string => {
   const csvHeader = 'id,name,imageURL\n';
 
   const csvRows = selectedCards
-    .map((card) =>
-      card === null ? '' : `${card.id},"${card.name}","${card.imageURL}"`
-    )
+    .map((card) => `${card.id},"${card.name}","${card.imageURL}"`)
     .join('\n');
 
   const csvContent = csvHeader + csvRows;
