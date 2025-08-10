@@ -1,11 +1,11 @@
-import type { Card } from '../app/types';
+import type { Card } from '../../app/types';
 import type { FC, ReactNode } from 'react';
 
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
-import { useCheckListStore } from '../store/useCheckList';
-import CardItem from './UI/CardItem/CardItem';
+import { useCheckListStore } from '../../store/useCheckList';
+import CardItem from '../UI/CardItem/CardItem';
 
-import Flyout from './flyout/Flyout';
+import Flyout from '../flyout/Flyout';
 
 type CardFormProps = {
   cards: Card[];

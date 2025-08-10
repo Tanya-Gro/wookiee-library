@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { mockCard } from '../test-utils/mocks/cards';
+import { mockCard } from '../../test-utils/mocks/cards';
 import CardForm from './CardForm';
 import { MemoryRouter } from 'react-router-dom';
 
