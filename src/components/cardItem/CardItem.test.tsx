@@ -1,6 +1,7 @@
-import CardItem from './CardItem';
 import { render, screen } from '@testing-library/react';
-import { mockCard } from '../../../test-utils/mocks/cards';
+import { mockCard } from '../../test-utils/mocks/cards';
+
+import CardItem from './CardItem';
 import styles from './CardItem.module.css';
 
 describe('CardItem', () => {
