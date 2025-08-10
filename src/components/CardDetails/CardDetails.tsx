@@ -1,13 +1,11 @@
-import type { Details } from '../../app/types';
 import type { ReactNode } from 'react';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { isFetchError } from '../../helpers/isFetchError';
+import { useCardDetails } from '../../hooks/useCardDetails';
 
 import Button from '../UI/button/Button';
 import Loader from '../loader/Loader';
-import getDetails from '../../api/getDetails';
 
 import styles from './CardDetails.module.css';
 
@@ -18,26 +16,14 @@ function CardDetails(): ReactNode {
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [cardDescription, setCardDescription] = useState<Details | null>(null);
-
-  useEffect(() => {
-    const fetchDetails = async (): Promise<void> => {
-      setIsLoading(true);
-      const data = await getDetails(detailsId);
-      if (!isFetchError(data)) {
-        setCardDescription(data);
-      }
-      setIsLoading(false);
-    };
-    fetchDetails();
-  }, [detailsId]);
+  const { data, isLoading } = useCardDetails(detailsId);
+  const cardDescription = data;
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (!cardDescription) {
+  if (!cardDescription || isFetchError(cardDescription)) {
     return (
       <div className={styles.card_details}>
         <p className={styles.info}>Description not found 😭</p>
