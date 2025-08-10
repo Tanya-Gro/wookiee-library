@@ -1,8 +1,10 @@
-import CardDetails from './CardDetails';
+import type { Details } from '../../app/types';
+
 import { render, screen, waitFor } from '@testing-library/react';
-import { mockDetails } from '../../../test-utils/mocks/details';
 import { MemoryRouter } from 'react-router-dom';
-import type { Details } from '../../../app/types';
+import { mockDetails } from '../../test-utils/mocks/details';
+
+import CardDetails from './CardDetails';
 
 vi.mock('../../../api/getDetails', () => ({
   default: async (): Promise<Details> => mockDetails[0],
