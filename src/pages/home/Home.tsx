@@ -6,7 +6,7 @@ import { isFetchError } from '../../helpers/isFetchError';
 import getCards from '../../api/getCards';
 import SearchForm from '../../components/searchForm/SearchForm';
 import Pagination from '../../components/pagination/Pagination';
-import Loader from '../../components/UI/loader/Loader';
+import Loader from '../../components/loader/Loader';
 import CardForm from '../../components/cardForm/CardForm';
 import useLocalStorage from '../../hooks/useLocalStorage';
 

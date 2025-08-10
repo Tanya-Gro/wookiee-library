@@ -1,11 +1,14 @@
 import type { Details } from '../../app/types';
+import type { ReactNode } from 'react';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { isFetchError } from '../../helpers/isFetchError';
+
 import Button from '../UI/button/Button';
-import Loader from '../UI/loader/Loader';
+import Loader from '../loader/Loader';
 import getDetails from '../../api/getDetails';
+
 import styles from './CardDetails.module.css';
 
 function CardDetails(): ReactNode {
