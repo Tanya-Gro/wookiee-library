@@ -1,4 +1,5 @@
-import { type FC, type MouseEventHandler, type ReactNode } from 'react';
+import type { FC, MouseEventHandler, ReactNode } from 'react';
+
 import styles from './Button.module.css';
 
 type ButtonProps = {

@@ -2,10 +2,12 @@ import type { ReactNode } from 'react';
 
 import { handleDownload } from '../../helpers/handleDownload';
 import { useCheckListStore } from '../../store/useCheckList';
+
 import Button from '../UI/button/Button';
 import buttonStyles from '../UI/button/Button.module.css';
-import styles from './flyout.module.css';
 import classNames from 'classnames';
+
+import styles from './flyout.module.css';
 
 const Flyout = (): ReactNode => {
   const { selectedCards, deleteCards } = useCheckListStore((state) => state);
