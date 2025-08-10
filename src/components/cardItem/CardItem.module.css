@@ -1,0 +1,79 @@
+.card {
+  width: 180px;
+  padding: 10px;
+  border: 1px solid rgb(var(--disable-color));
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+  box-shadow: 2px 2px 5px 4px rgba(var(--shadow), 0.3);
+  background-color: var(--background-color);
+  cursor: pointer;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card:hover {
+  transform: scale(1.03);
+  box-shadow: 4px 4px 8px var(--primary-color);
+}
+
+.img {
+  width: 150px;
+  height: auto;
+  border-radius: 7px;
+  transition: transform 0.3s ease;
+}
+
+.img:hover {
+  transform: scale(1.05);
+}
+
+.title {
+  font-size: 1.5rem;
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+.checkbox {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 10;
+
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+
+  appearance: none;
+  background-color: white;
+  border: 2px solid var(--dark-primary-color);
+
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  opacity: 0.6;
+  cursor: pointer;
+
+  transition:
+    background-color 0.3s ease,
+    border-radius 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.checkbox:checked {
+  box-shadow: 0 0 5px var(--primary-color);
+  opacity: 1;
+}
+
+.checkbox:checked::after {
+  content: '\2714';
+  font-size: 3rem;
+  color: var(--dark-primary-color);
+
+  position: absolute;
+  top: -8px;
+  left: 0px;
+}

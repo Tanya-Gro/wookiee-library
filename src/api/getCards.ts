@@ -10,9 +10,11 @@ async function getCards(
   currentPage: number
 ): Promise<DataType | FetchError> {
   try {
-    const response = await fetch(
-      `${LINKS.characters}?${searchQuery ? `search=${searchQuery}&` : ''}page=${currentPage}`
-    );
+    const url = new URL(LINKS.characters);
+    url.searchParams.set('search', searchQuery);
+    url.searchParams.set('page', currentPage.toString());
+
+    const response = await fetch(url);
 
     if (!response.ok) {
       return { hasError: true, message: `${response.status}` };

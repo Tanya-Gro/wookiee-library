@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import SearchForm from './SearchForm';
-import { mockRequest } from '../test-utils/mocks/request';
+import { mockRequest } from '../../test-utils/mocks/request';
 
 const handleSearch = vi.fn();
 

@@ -1,8 +1,11 @@
-import type { Card } from '../app/types';
+import type { Card } from '../../app/types';
 import type { FC, ReactNode } from 'react';
 
-import CardItem from './UI/CardItem/CardItem';
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import { useCheckListStore } from '../../store/useCheckList';
+
+import Flyout from '../flyout/Flyout';
+import CardItem from '../cardItem/CardItem';
 
 type CardFormProps = {
   cards: Card[];
@@ -12,9 +15,10 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
-
   const detailsId = searchParams.get('details') || '';
   const page = searchParams.get('page') || '';
+
+  const { selectedCards, toggleCard } = useCheckListStore((state) => state);
 
   return (
     <>
@@ -26,16 +30,23 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
               <CardItem
                 card={card}
                 key={card.id}
-                onClick={() => navigate(`?page=${page}&details=${card.id}`)}
+                onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
+                onToggleCheckbox={(event) => {
+                  event.stopPropagation();
+                  toggleCard(card);
+                }}
+                isChecked={selectedCards.some(
+                  (existingCard) => existingCard.id === card.id
+                )}
               />
             ))
           ) : (
             <p className="info-message">Nothing found 😭</p>
           )}
         </div>
-
         {detailsId && <Outlet />}
       </div>
+      {selectedCards.length > 0 && <Flyout />}
     </>
   );
 };

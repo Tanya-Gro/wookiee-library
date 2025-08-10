@@ -1,10 +1,12 @@
 import type { ReactNode } from 'react';
+
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Layout from './components/UI/layout/Layout';
+
+import Layout from './components/layout/Layout';
 import HomePage from './pages/home/Home';
 import NotFoundPage from './pages/404/NotFound';
 import AboutPage from './pages/about/About';
-import CardDetails from './components/UI/CardDetails/CardDetails';
+import CardDetails from './components/CardDetails/CardDetails';
 
 function App(): ReactNode {
   return (

@@ -1,5 +1,8 @@
-import { useState, type ChangeEvent, type FC } from 'react';
-import Button from './UI/button/Button';
+import type { ChangeEvent, FC } from 'react';
+
+import { useState } from 'react';
+
+import Button from '../UI/button/Button';
 
 type SearchFormProps = {
   searchQuery: string;

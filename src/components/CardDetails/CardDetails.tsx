@@ -1,12 +1,15 @@
-import type { Details } from '../../../app/types';
+import type { Details } from '../../app/types';
+import type { ReactNode } from 'react';
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useEffect, useState, type ReactNode } from 'react';
-import { isFetchError } from '../../../helpers/isFetchError';
-import getDetails from '../../../api/getDetails';
-import styles from './CardDetails.module.css';
+import { useEffect, useState } from 'react';
+import { isFetchError } from '../../helpers/isFetchError';
+
+import Button from '../UI/button/Button';
 import Loader from '../loader/Loader';
-import Button from '../button/Button';
+import getDetails from '../../api/getDetails';
+
+import styles from './CardDetails.module.css';
 
 function CardDetails(): ReactNode {
   const navigate = useNavigate();

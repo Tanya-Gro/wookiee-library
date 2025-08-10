@@ -1,5 +1,7 @@
 import { type FC } from 'react';
 
+import classNames from 'classnames';
+
 type PaginationProps = {
   currentPage: number;
   pageCount: number;
@@ -13,17 +15,20 @@ const Pagination: FC<PaginationProps> = ({
   isLoading,
   onPageChange,
 }) => {
+  const isPrevDisabled = currentPage === 1 || isLoading;
+  const isNextDisabled = currentPage === pageCount || isLoading;
   return (
     <>
       <hr />
       <div className="wrapper center" data-testid="pagination">
         <span
-          className={`material-symbols-outlined ${currentPage === 1 || isLoading ? 'disabled' : ''}`}
+          className={classNames('material-symbols-outlined', {
+            disabled: isPrevDisabled,
+          })}
           onClick={() => {
-            if (currentPage === 1 || isLoading) {
-              return;
+            if (!isPrevDisabled) {
+              onPageChange(currentPage - 1);
             }
-            onPageChange(currentPage - 1);
           }}
         >
           arrow_back
@@ -36,12 +41,13 @@ const Pagination: FC<PaginationProps> = ({
           disabled
         />
         <span
-          className={`material-symbols-outlined ${currentPage === pageCount || isLoading ? 'disabled' : ''}`}
+          className={classNames('material-symbols-outlined', {
+            disabled: isNextDisabled,
+          })}
           onClick={() => {
-            if (currentPage === pageCount || isLoading) {
-              return;
+            if (!isNextDisabled) {
+              onPageChange(currentPage + 1);
             }
-            onPageChange(currentPage + 1);
           }}
         >
           arrow_forward

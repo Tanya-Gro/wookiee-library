@@ -1,0 +1,25 @@
+.flyout {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  z-index: 15;
+
+  width: auto;
+  height: auto;
+  padding: 0 5px;
+  border: 1px solid rgb(var(--disable-color));
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: rgba(var(--disable-color), 0.8);
+}
+
+.link {
+  padding: 4px 15px;
+  margin: 10px;
+}
