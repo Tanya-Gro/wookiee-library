@@ -1,4 +1,5 @@
-import type { Card } from '../../../app/types';
+import type { Card } from '../../app/types';
+
 import type { FC, MouseEvent, ReactNode } from 'react';
 
 import styles from './CardItem.module.css';
