@@ -3,9 +3,9 @@ import type { FC, ReactNode } from 'react';
 
 import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
 import { useCheckListStore } from '../../store/useCheckList';
-import CardItem from '../UI/CardItem/CardItem';
 
 import Flyout from '../flyout/Flyout';
+import CardItem from '../cardItem/CardItem';
 
 type CardFormProps = {
   cards: Card[];
