@@ -3,7 +3,8 @@ import type { DataType } from '../../app/types';
 import HomePage from './Home';
 import { mockCard } from '../../test-utils/mocks/cards';
 import { render, screen, waitFor } from '@testing-library/react';
-import type * as ReactRouterDom from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('../../api/getCards', () => ({
   default: async (): Promise<DataType> => ({
@@ -12,26 +13,32 @@ vi.mock('../../api/getCards', () => ({
   }),
 }));
 
-vi.mock('react-router-dom', async () => {
-  const actual =
-    await vi.importActual<typeof ReactRouterDom>('react-router-dom');
-
-  return {
-    ...actual,
-    useSearchParams: vi.fn(() => {
-      const searchParams = new URLSearchParams({ page: '1' });
-      const setSearchParams = vi.fn();
-      return [searchParams, setSearchParams] as const;
-    }),
-    useNavigate: (): void => {
-      vi.fn();
-    },
-  };
-});
-
 describe('Home', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
   it('render Home', async () => {
-    render(<HomePage />);
+    render(
+      <MemoryRouter initialEntries={['/home']}>
+        <QueryClientProvider client={queryClient}>
+          <HomePage />
+        </QueryClientProvider>
+      </MemoryRouter>
+    );
 
     expect(screen.getByTestId('search-form')).toBeInTheDocument();
     await waitFor(() => {
