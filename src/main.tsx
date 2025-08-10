@@ -1,10 +1,12 @@
+import App from './App.tsx';
+import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
+
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
+import { Providers } from './context/Providers.tsx';
+
 import './index.css';
-import App from './App.tsx';
-import ErrorBoundary from './components/errorBoundary/ErrorBoundary.tsx';
-import { ThemeProvider } from './context/ThemeProvider.tsx';
 
 const rootElement = document.getElementById('root');
 
@@ -14,9 +16,9 @@ createRoot(rootElement).render(
   <StrictMode>
     <ErrorBoundary>
       <BrowserRouter>
-        <ThemeProvider>
+        <Providers>
           <App />
-        </ThemeProvider>
+        </Providers>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>

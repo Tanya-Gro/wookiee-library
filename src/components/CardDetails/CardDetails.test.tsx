@@ -2,6 +2,7 @@ import type { Details } from '../../app/types';
 
 import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { mockDetails } from '../../test-utils/mocks/details';
 
 import CardDetails from './CardDetails';
@@ -25,10 +26,29 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('CardDetails', () => {
+  let queryClient: QueryClient;
+
+  beforeEach(() => {
+    queryClient = new QueryClient({
+      defaultOptions: {
+        queries: {
+          retry: false,
+        },
+      },
+    });
+    vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    queryClient.clear();
+  });
+
   it('should render detail card', async () => {
     render(
       <MemoryRouter>
-        <CardDetails />
+        <QueryClientProvider client={queryClient}>
+          <CardDetails />
+        </QueryClientProvider>
       </MemoryRouter>
     );
 

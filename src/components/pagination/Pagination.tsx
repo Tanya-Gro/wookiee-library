@@ -1,20 +1,19 @@
 import { type FC } from 'react';
 
 import classNames from 'classnames';
+import { useSearchParams } from 'react-router-dom';
 
 type PaginationProps = {
-  currentPage: number;
   pageCount: number;
   isLoading: boolean;
-  onPageChange: (page: number) => void;
 };
 
-const Pagination: FC<PaginationProps> = ({
-  currentPage,
-  pageCount,
-  isLoading,
-  onPageChange,
-}) => {
+const Pagination: FC<PaginationProps> = ({ pageCount, isLoading }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const onPageChange = (page: number): void =>
+    setSearchParams({ page: page.toString() });
+
   const isPrevDisabled = currentPage === 1 || isLoading;
   const isNextDisabled = currentPage === pageCount || isLoading;
   return (

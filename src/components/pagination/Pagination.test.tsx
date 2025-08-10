@@ -1,67 +1,86 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+
 import userEvent from '@testing-library/user-event';
 import Pagination from './Pagination';
 
-const handleSearch = vi.fn();
+const currentPage = 2;
+const pageCount = 6;
 
-const props = {
-  currentPage: 2,
-  pageCount: 6,
-};
+type ISetSearchParams = (params: Record<string, string>) => void;
+let setSearchParams: ISetSearchParams;
 
 describe('Pagination', () => {
+  beforeEach(() => {
+    setSearchParams = vi.fn();
+    vi.mock('react-router-dom', async () => {
+      const actual = await vi.importActual('react-router-dom');
+      return {
+        ...actual,
+        useSearchParams: (): (ISetSearchParams | URLSearchParams)[] => [
+          new URLSearchParams(`page=${currentPage}`),
+          setSearchParams,
+        ],
+      };
+    });
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('render Pagination', async () => {
     render(
-      <Pagination
-        currentPage={props.currentPage}
-        pageCount={props.pageCount}
-        isLoading={false}
-        onPageChange={handleSearch}
-      />
+      <MemoryRouter initialEntries={[`/home?page=${currentPage}`]}>
+        <Pagination pageCount={pageCount} isLoading={false} />
+      </MemoryRouter>
     );
 
     const arrowBack = screen.getByText(/arrow_back/i);
+    const input = screen.getByRole('textbox');
+    const arrowForward = screen.getByText(/arrow_forward/i);
+
     expect(arrowBack).toBeInTheDocument();
     expect(arrowBack).toHaveClass(/material-symbols-outlined/i);
 
-    await userEvent.click(arrowBack);
-    expect(handleSearch).toHaveBeenCalledWith(props.currentPage - 1);
-    expect(handleSearch).toHaveBeenCalledTimes(1);
-
-    const input = screen.getByRole('textbox');
     expect(input).toBeInTheDocument();
     expect(input).toHaveClass('input paginate_input');
-    expect(input).toHaveValue(
-      `Page ${props.currentPage} of ${props.pageCount}`
-    );
 
-    const arrowForward = screen.getByText(/arrow_forward/i);
     expect(arrowForward).toBeInTheDocument();
     expect(arrowForward).toHaveClass(/material-symbols-outlined/i);
 
+    await userEvent.click(arrowBack);
+    expect(setSearchParams).toHaveBeenCalledWith({
+      page: (currentPage - 1).toString(),
+    });
+    expect(setSearchParams).toHaveBeenCalledTimes(1);
+
+    expect(input).toHaveValue(`Page ${currentPage} of ${pageCount}`);
+
     await userEvent.click(arrowForward);
-    expect(handleSearch).toHaveBeenCalledWith(props.currentPage + 1);
-    expect(handleSearch).toHaveBeenCalledTimes(2);
+    expect(setSearchParams).toHaveBeenCalledWith({
+      page: (currentPage + 1).toString(),
+    });
+    expect(setSearchParams).toHaveBeenCalledTimes(2);
   });
 
   it('Disable page change arrows on load', async () => {
     render(
-      <Pagination
-        currentPage={props.currentPage}
-        pageCount={props.pageCount}
-        isLoading={true}
-        onPageChange={handleSearch}
-      />
+      <MemoryRouter initialEntries={[`/home?page=${currentPage}`]}>
+        <Pagination pageCount={pageCount} isLoading={true} />
+      </MemoryRouter>
     );
 
     const arrowBack = screen.getByText(/arrow_back/i);
-    expect(arrowBack).toHaveClass(/disabled/i);
-    await userEvent.click(arrowBack);
-    expect(handleSearch).not.toHaveBeenCalledWith();
-
     const arrowForward = screen.getByText(/arrow_forward/i);
+
+    expect(arrowBack).toHaveClass(/disabled/i);
     expect(arrowForward).toHaveClass(/disabled/i);
+
+    await userEvent.click(arrowBack);
+    expect(setSearchParams).not.toHaveBeenCalledWith();
+
     await userEvent.click(arrowForward);
-    expect(handleSearch).not.toHaveBeenCalledWith();
+    expect(setSearchParams).not.toHaveBeenCalledWith();
   });
 });

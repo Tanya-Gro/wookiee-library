@@ -1,20 +1,25 @@
 import { render, screen } from '@testing-library/react';
+import { mockRequest } from '../../test-utils/mocks/request';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import userEvent from '@testing-library/user-event';
 import SearchForm from './SearchForm';
-import { mockRequest } from '../../test-utils/mocks/request';
 
 const handleSearch = vi.fn();
+const queryClient = new QueryClient();
 
 describe('SearchForm', () => {
   const ROLE_OPTIONS = { name: /search/i };
 
   it('render SearchForm', async () => {
     render(
-      <SearchForm
-        searchQuery=""
-        isLoading={false}
-        onSearchQueryChange={handleSearch}
-      />
+      <QueryClientProvider client={queryClient}>
+        <SearchForm
+          searchQuery=""
+          isLoading={false}
+          onSearchQueryChange={handleSearch}
+        />
+      </QueryClientProvider>
     );
 
     const input = screen.getByRole('textbox');

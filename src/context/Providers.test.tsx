@@ -1,11 +1,11 @@
-import { ThemeProvider } from './ThemeProvider';
+import { Providers } from './Providers';
 import { render, screen } from '@testing-library/react';
 
 it('Provider renders children correctly', () => {
   render(
-    <ThemeProvider>
+    <Providers>
       <div data-testid="child" />
-    </ThemeProvider>
+    </Providers>
   );
 
   expect(screen.getByTestId('child')).toBeInTheDocument();
