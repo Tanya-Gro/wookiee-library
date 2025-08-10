@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
+
+import { LINKS } from '../../app/constants';
 import styles from './Footer.module.css';
-import { LINKS } from '../../../app/constants';
 
 function Footer(): ReactNode {
   return (

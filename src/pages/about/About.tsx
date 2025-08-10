@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
+
 import { LINKS } from '../../app/constants';
+import Footer from '../../components/footer/Footer';
 import styles from './About.module.css';
-import Footer from '../../components/UI/footer/Footer';
 
 export default function AboutPage(): ReactNode {
   return (
