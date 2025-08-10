@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import { NavLink, Outlet } from 'react-router-dom';
-import { useTheme } from '../../../context/theme';
+import { useTheme } from '../../context/theme';
 import styles from './Layout.module.css';
 import classNames from 'classnames';
 
