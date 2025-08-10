@@ -1,58 +1,40 @@
-import { useEffect, useState, type ReactNode } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import type { Card } from '../../app/types';
+import type { ReactNode } from 'react';
 
+import { useSearchParams } from 'react-router-dom';
 import { isFetchError } from '../../helpers/isFetchError';
-import getCards from '../../api/getCards';
+import { useCards } from '../../hooks/useCards';
+
+import useLocalStorage from '../../hooks/useLocalStorage';
 import SearchForm from '../../components/searchForm/SearchForm';
 import Pagination from '../../components/pagination/Pagination';
 import Loader from '../../components/loader/Loader';
 import CardForm from '../../components/cardForm/CardForm';
-import useLocalStorage from '../../hooks/useLocalStorage';
 
 const HomePage = (): ReactNode => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [currentPage, setCurrentPage] = useState<number>(
-    Number(searchParams.get('page')) || 1
-  );
-  const [pageCount, setPageCount] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasError, setHasError] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const [cards, setCards] = useState<Card[]>([]);
+  const currentPage = Number(searchParams.get('page')) || 1;
   const [searchQuery, setSearchQuery] = useLocalStorage('searchQuery', '');
 
-  useEffect(() => {
-    if (currentPage !== Number(searchParams.get('page'))) {
-      setSearchParams({ page: currentPage.toString() });
-    }
-  }, [currentPage, searchParams, setSearchParams]);
+  const { data, isLoading, isError, error } = useCards(
+    searchQuery,
+    currentPage
+  );
 
-  useEffect(() => {
-    const getData = async (): Promise<void> => {
-      setIsLoading(true);
-      const data = await getCards(searchQuery, currentPage);
-
-      if (!isFetchError(data)) {
-        setCards(data.cards);
-        setPageCount(data.pageCount);
-        setHasError(false);
-      } else {
-        setErrorMessage(data.message);
-        setHasError(true);
-      }
-      setIsLoading(false);
-    };
-    getData();
-  }, [searchQuery, currentPage]);
+  if (isError) {
+    return <div>Error: {error.message}</div>;
+  }
 
   const handleSearchChange = (query: string): void => {
     setSearchQuery(query);
-    setCurrentPage(1);
+    setSearchParams({ page: '1' });
   };
 
-  if (hasError) {
-    throw new Error(errorMessage);
+  if (data && isFetchError(data)) {
+    return (
+      <div className="wrapper grow center">
+        <p className="info-message">Nothing found 😭</p>
+      </div>
+    );
   }
 
   return (
@@ -62,13 +44,8 @@ const HomePage = (): ReactNode => {
         isLoading={isLoading}
         onSearchQueryChange={handleSearchChange}
       />
-      {isLoading ? <Loader /> : <CardForm cards={cards} />}
-      <Pagination
-        currentPage={currentPage}
-        pageCount={pageCount}
-        onPageChange={setCurrentPage}
-        isLoading={isLoading}
-      />
+      {isLoading ? <Loader /> : data && <CardForm cards={data.cards} />}
+      {data && <Pagination pageCount={data.pageCount} isLoading={isLoading} />}
     </>
   );
 };
