@@ -1,4 +1,4 @@
-import '../../index.css';
+import '../../src/index.css';
 import { ClientOnly } from './client';
 
 export function generateStaticParams(): Record<string, string[]>[] {
