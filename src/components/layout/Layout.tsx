@@ -1,35 +1,40 @@
-import type { FC } from 'react';
+'use client';
 
-import { NavLink, Outlet } from 'react-router-dom';
 import { useTheme } from '../../context/theme';
 
+import Link from 'next/link';
 import classNames from 'classnames';
-
 import styles from './Layout.module.css';
+import { usePathname } from 'next/navigation';
 
-const Layout: FC = () => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const Layout = ({ children }: Props): React.ReactNode => {
   const { isLightTheme, toggleTheme } = useTheme();
+  const pathname = usePathname();
 
   return (
     <>
       <header className="wrapper header">
         <nav>
-          <NavLink
-            to="/home"
-            className={({ isActive }) =>
-              classNames(styles.link, { [styles.active]: isActive })
-            }
+          <Link
+            href="/home"
+            className={classNames(styles.link, {
+              [styles.active]: pathname === '/home',
+            })}
           >
             Home
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={({ isActive }) =>
-              classNames(styles.link, { [styles.active]: isActive })
-            }
+          </Link>
+          <Link
+            href="/about"
+            className={classNames(styles.link, {
+              [styles.active]: pathname === '/about',
+            })}
           >
             About
-          </NavLink>
+          </Link>
         </nav>
 
         <span
@@ -50,7 +55,7 @@ const Layout: FC = () => {
       </header>
       <main className="wrapper grow column">
         <hr />
-        <Outlet />
+        {children}
       </main>
     </>
   );

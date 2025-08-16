@@ -1,8 +1,16 @@
 import type { Metadata } from 'next';
 
+import Layout from '@/src/components/layout/Layout';
+import { Providers } from './providers';
+
+import '../src/index.css';
+
 export const metadata: Metadata = {
   title: 'Wookiee Library',
   description: 'Educational project at RS school, React course',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({
@@ -19,7 +27,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div id="root">{children}</div>
+        <div id="root">
+          <Providers>
+            <Layout>{children}</Layout>
+          </Providers>
+        </div>
       </body>
     </html>
   );

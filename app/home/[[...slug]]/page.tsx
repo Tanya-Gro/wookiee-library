@@ -1,10 +1,13 @@
-import '../../src/index.css';
-import { ClientOnly } from './client';
+import HomePage from '@/src/pages/home/Home';
 
 export function generateStaticParams(): Record<string, string[]>[] {
   return [{ slug: [''] }];
 }
 
 export default function Page(): React.ReactNode {
-  return <ClientOnly />;
+  return (
+    <>
+      <HomePage />
+    </>
+  );
 }

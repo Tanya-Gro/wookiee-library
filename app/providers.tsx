@@ -1,19 +1,18 @@
-import type { ReactNode } from 'react';
+'use client';
 
 import { useEffect } from 'react';
-import { ThemeContext } from './theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
-import useLocalStorage from '../hooks/useLocalStorage';
+import { ThemeContext } from '@/src/context/theme';
+import { useLocalStorage } from '@/src/hooks/useLocalStorage';
 
 interface IProviders {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 const queryClient = new QueryClient();
 
-export const Providers = ({ children }: IProviders): ReactNode => {
+export const Providers = ({ children }: IProviders): React.ReactNode => {
   const [isLightTheme, setIsLightTheme] = useLocalStorage('isLight', true);
   const toggleTheme = (): void => setIsLightTheme(!isLightTheme);
 
