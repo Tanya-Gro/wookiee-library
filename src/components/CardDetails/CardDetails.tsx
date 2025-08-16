@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { isFetchError } from '../../helpers/isFetchError';
 import { useCardDetails } from '../../hooks/useCardDetails';
 
@@ -10,14 +10,21 @@ import Loader from '../loader/Loader';
 import styles from './CardDetails.module.css';
 
 function CardDetails(): ReactNode {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const detailsId = searchParams.get('details') || '';
-  const page = searchParams.get('page') || '';
+  //TODO: проверить на невалидных данных в адресной строке
+  // поискать способ избавится от "или", детали в строке будут
+  const detailsId = searchParams?.get('details') || '';
 
   const { data, isLoading } = useCardDetails(detailsId);
   const cardDescription = data;
+
+  const handleClose = (): void => {
+    const params = new URLSearchParams(searchParams?.toString());
+    params.delete('details');
+    router.push(`?${params.toString()}`);
+  };
 
   if (isLoading) {
     return <Loader />;
@@ -27,7 +34,7 @@ function CardDetails(): ReactNode {
     return (
       <div className={styles.card_details}>
         <p className={styles.info}>Description not found 😭</p>
-        <Button onClick={() => navigate(`?page=${page}`)}>Close</Button>
+        <Button onClick={handleClose}>Close</Button>
       </div>
     );
   }
@@ -182,7 +189,7 @@ function CardDetails(): ReactNode {
           More on Wookieepedia
         </a>
       </div>
-      <Button onClick={() => navigate(`?page=${page}`)}>Close</Button>
+      <Button onClick={handleClose}>Close</Button>
     </div>
   );
 }

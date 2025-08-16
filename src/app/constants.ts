@@ -5,6 +5,6 @@ export const CARDS_PER_PAGE: number = 10;
 export const LINKS: Url = {
   characters: 'https://swapi.py4e.com/api/people/',
   details: 'https://akabab.github.io/starwars-api/api/id/',
-  RSS: 'https://rs.school/react/',
+  RSS: 'https://rs.school/',
   GitHub: 'https://github.com/Tanya-Gro',
 };

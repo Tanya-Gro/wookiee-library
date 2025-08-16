@@ -1,18 +1,24 @@
-import { type FC } from 'react';
-
 import classNames from 'classnames';
-import { useSearchParams } from 'react-router-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 type PaginationProps = {
   pageCount: number;
   isLoading: boolean;
 };
 
-const Pagination: FC<PaginationProps> = ({ pageCount, isLoading }) => {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
-  const onPageChange = (page: number): void =>
-    setSearchParams({ page: page.toString() });
+const Pagination: React.FC<PaginationProps> = ({
+  pageCount,
+  isLoading,
+}: PaginationProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams?.get('page')) || 1;
+
+  const onPageChange = (page: number): void => {
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set('page', page.toString());
+    router.push(`?${params.toString()}`);
+  };
 
   const isPrevDisabled = currentPage === 1 || isLoading;
   const isNextDisabled = currentPage === pageCount || isLoading;
