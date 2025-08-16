@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Layout from '@/src/components/layout/Layout';
 import { Providers } from './providers';
 
-import '../src/index.css';
+import './global.css';
 
 export const metadata: Metadata = {
   title: 'Wookiee Library',
