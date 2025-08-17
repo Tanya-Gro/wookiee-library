@@ -11,7 +11,13 @@ import Pagination from '../../components/pagination/Pagination';
 import Loader from '../../components/loader/Loader';
 import CardForm from '../../components/cardForm/CardForm';
 
-const HomePage = (): React.ReactNode => {
+import type { DataType, FetchError } from '@/src/app/types';
+
+type HomePageProps = {
+  initialData: DataType | FetchError;
+};
+
+const HomePage = ({ initialData }: HomePageProps): React.ReactNode => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams?.get('page')) || 1;
@@ -23,10 +29,11 @@ const HomePage = (): React.ReactNode => {
     setLocalSearchQuery(searchQuery);
   }, [searchQuery]);
 
-  const { data, isLoading, isError, error } = useCards(
-    localSearchQuery,
-    currentPage
-  );
+  const { data, isLoading, isError, error } = useCards({
+    searchQuery: localSearchQuery,
+    currentPage: currentPage,
+    options: { initialData },
+  });
 
   if (isError) {
     return <div>Error: {error.message}</div>;
@@ -39,10 +46,6 @@ const HomePage = (): React.ReactNode => {
     const params = new URLSearchParams(searchParams?.toString());
     params.set('page', '1');
     router.push(`?${params.toString()}`);
-    //TODO: ? подумать надо ли а адресную строку помещать строку поиска
-    // если надо то проверить cardForm(брать поиск из адреса)
-    // params.set('search', query);
-    // router.push(`?${params.toString()}`);
   };
 
   if (data && isFetchError(data)) {
