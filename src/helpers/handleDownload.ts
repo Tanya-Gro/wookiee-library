@@ -1,15 +1,21 @@
 import type { Card } from '../app/types';
 
-export const handleDownload = (selectedCards: Card[]): string => {
-  const csvHeader = 'id,name,imageURL\n';
+export const handleDownload = async (selectedCards: Card[]): Promise<void> => {
+  const res = await fetch('/api/download-csv', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(selectedCards),
+  });
 
-  const csvRows = selectedCards
-    .map((card) => `${card.id},"${card.name}","${card.imageURL}"`)
-    .join('\n');
+  const blob = await res.blob();
+  const url = URL.createObjectURL(blob);
 
-  const csvContent = csvHeader + csvRows;
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${selectedCards.length}_wookiee_cards.csv`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
 
-  const blob = new Blob([csvContent], { type: 'text/csv' });
-
-  return URL.createObjectURL(blob);
+  URL.revokeObjectURL(url);
 };

@@ -1,24 +1,30 @@
-import type { Card } from '../../app/types';
-import type { FC, ReactNode } from 'react';
+'use client';
 
-import { Outlet, useNavigate, useSearchParams } from 'react-router-dom';
+import type { Card } from '../../app/types';
+
 import { useCheckListStore } from '../../store/useCheckList';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import Flyout from '../flyout/Flyout';
 import CardItem from '../cardItem/CardItem';
+import CardDetails from '../CardDetails/CardDetails';
 
 type CardFormProps = {
   cards: Card[];
 };
 
-const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
-  const navigate = useNavigate();
-
-  const [searchParams] = useSearchParams();
-  const detailsId = searchParams.get('details') || '';
-  const page = searchParams.get('page') || '';
+const CardForm: React.FC<CardFormProps> = ({ cards }: CardFormProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const detailsId = searchParams?.get('details') || '';
 
   const { selectedCards, toggleCard } = useCheckListStore((state) => state);
+
+  const handleClickCard = (cardId: string): void => {
+    const params = new URLSearchParams(searchParams?.toString());
+    params.set('details', cardId);
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <>
@@ -30,7 +36,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
               <CardItem
                 card={card}
                 key={card.id}
-                onClickCard={() => navigate(`?page=${page}&details=${card.id}`)}
+                onClickCard={() => handleClickCard(card.id)}
                 onToggleCheckbox={(event) => {
                   event.stopPropagation();
                   toggleCard(card);
@@ -44,7 +50,7 @@ const CardForm: FC<CardFormProps> = ({ cards }): ReactNode => {
             <p className="info-message">Nothing found 😭</p>
           )}
         </div>
-        {detailsId && <Outlet />}
+        {detailsId && <CardDetails />}
       </div>
       {selectedCards.length > 0 && <Flyout />}
     </>

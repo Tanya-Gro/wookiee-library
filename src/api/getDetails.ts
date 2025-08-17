@@ -6,14 +6,12 @@ async function getDetails(id: string): Promise<Details | FetchError> {
     const response = await fetch(`${LINKS.details}${id}.json`);
 
     if (!response.ok) {
-      console.error(`HTTP error! Status: ${response.status}`);
       return { hasError: true, message: `${response.status}` };
     }
 
-    const data = await response.json();
+    const data: Details = await response.json();
     return data;
   } catch (error) {
-    console.error('Fetch error:', error);
     return { hasError: true, message: String(error) };
   }
 }

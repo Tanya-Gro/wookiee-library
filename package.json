@@ -4,26 +4,25 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix --color ./src",
     "preview": "vite preview",
     "ci:format": "prettier --check .",
     "format": "prettier --write .",
-    "prepare": "husky",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage"
+    "prepare": "husky"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.84.2",
     "@tanstack/react-query-devtools": "^5.84.2",
     "classnames": "^2.5.1",
+    "next": "^15.4.6",
+    "next-intl": "^4.3.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router": "^7.7.1",
-    "react-router-dom": "^7.7.1",
     "zustand": "^5.0.7"
   },
   "devDependencies": {
@@ -35,8 +34,6 @@
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
-    "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
     "eslint": "^9.29.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
@@ -50,8 +47,6 @@
     "msw": "^2.10.4",
     "prettier": "3.6.2",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.1",
-    "vite": "^7.0.0",
-    "vitest": "^3.2.4"
+    "typescript-eslint": "^8.34.1"
   }
 }

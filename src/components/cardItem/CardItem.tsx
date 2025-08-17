@@ -1,6 +1,9 @@
-import type { Card } from '../../app/types';
+'use client';
 
-import type { FC, MouseEvent, ReactNode } from 'react';
+import type { Card } from '../../app/types';
+import { useState, type FC, type MouseEvent, type ReactNode } from 'react';
+
+import Image from 'next/image';
 
 import styles from './CardItem.module.css';
 
@@ -17,6 +20,7 @@ const CardItem: FC<CardItemProps> = ({
   onToggleCheckbox,
   isChecked,
 }): ReactNode => {
+  const [src, setSrc] = useState(imageURL);
   return (
     <div className={styles.card} onClick={onClickCard} data-testid="card">
       <input
@@ -26,7 +30,14 @@ const CardItem: FC<CardItemProps> = ({
         onClick={onToggleCheckbox}
         readOnly
       />
-      <img src={imageURL} alt={name} className={styles.img} />
+      <Image
+        src={src}
+        alt={name}
+        width={200}
+        height={300}
+        className={styles.img}
+        onError={() => setSrc('/fallback.png')}
+      />
       <h3 className={styles.title}>{name}</h3>
     </div>
   );
