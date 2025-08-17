@@ -8,6 +8,7 @@
   transition: background-color 0.3s ease;
   background-color: var(--light-primary-background-color);
   text-decoration: none;
+  margin: 2px 0;
 }
 
 .button:hover {
