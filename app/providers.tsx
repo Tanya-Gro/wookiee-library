@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeContext } from '@/src/context/theme';
 import { useLocalStorage } from '@/src/hooks/useLocalStorage';
+import { LanguageProvider } from '@/src/i18n/i18n';
 
 interface IProviders {
   children: React.ReactNode;
@@ -23,7 +24,7 @@ export const Providers = ({ children }: IProviders): React.ReactNode => {
   return (
     <ThemeContext.Provider value={{ isLightTheme, toggleTheme }}>
       <QueryClientProvider client={queryClient}>
-        {children}
+        <LanguageProvider>{children}</LanguageProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ThemeContext.Provider>

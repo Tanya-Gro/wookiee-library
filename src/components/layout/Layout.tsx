@@ -6,6 +6,7 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Layout.module.css';
 import { usePathname } from 'next/navigation';
+import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 
 interface Props {
   children: React.ReactNode;
@@ -36,6 +37,8 @@ const Layout = ({ children }: Props): React.ReactNode => {
             About
           </Link>
         </nav>
+
+        <LocaleSwitcher />
 
         <span
           className={classNames(
