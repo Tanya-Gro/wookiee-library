@@ -1,11 +1,10 @@
 'use client';
 
 import { useTheme } from '../../context/theme';
+import { Link, usePathname } from '@/i18n/navigation';
 
-import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Layout.module.css';
-import { usePathname } from 'next/navigation';
 import LocaleSwitcher from '../localeSwitcher/LocaleSwitcher';
 
 interface Props {
