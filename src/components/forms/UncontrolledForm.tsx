@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function UncontrolledForm({ onSuccess }: Props) {
-  const { addUncontrolledForm } = useFormsStore((s) => s);
+  const { addForm, countries, addCountry } = useFormsStore((s) => s);
   const [errors, setErrors] = useState<ZodError['issues'] | undefined>(
     undefined
   );
@@ -49,7 +49,12 @@ export default function UncontrolledForm({ onSuccess }: Props) {
 
     setErrors(undefined);
     const base64 = await toBase64(file);
-    addUncontrolledForm({ ...data, picture: base64 });
+    addForm({ ...data, picture: base64 });
+
+    if (!countries.includes(data.country)) {
+      addCountry([...countries, data.country]);
+    }
+
     onSuccess();
     e.currentTarget.reset();
   };
@@ -58,7 +63,7 @@ export default function UncontrolledForm({ onSuccess }: Props) {
     errors?.find((issue) => issue.path[0] === field)?.message;
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className={styles.form} data-testid="form">
       <div>
         <div className="row">
           <label htmlFor="name" className="label">
@@ -131,9 +136,15 @@ export default function UncontrolledForm({ onSuccess }: Props) {
             id="country"
             name="country"
             type="text"
+            list="countries"
             className={styles.input}
             autoComplete="on"
           />
+          <datalist id="countries">
+            {countries.map((c) => (
+              <option key={c} value={c} />
+            ))}
+          </datalist>
         </div>
         <p className="red">{getError('country') || ''}</p>
       </div>

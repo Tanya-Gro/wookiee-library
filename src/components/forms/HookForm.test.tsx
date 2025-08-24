@@ -17,8 +17,9 @@ const ROLE_OPTION = { name: /submit/i };
 
 vi.mock('@/store/useFormsStore', () => ({
   useFormsStore: () => ({
-    addHookForm: vi.fn(),
+    addForm: vi.fn(),
     countries: ['Russia', 'Moldova'],
+    addCountry: vi.fn(),
   }),
 }));
 

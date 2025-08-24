@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function HookForm({ onSuccess }: Props) {
-  const { addHookForm, countries } = useFormsStore((s) => s);
+  const { addForm, countries, addCountry } = useFormsStore((s) => s);
   const {
     register,
     control,
@@ -25,7 +25,11 @@ export default function HookForm({ onSuccess }: Props) {
   const onSubmit = async (data: FormValues) => {
     const base64 = await toBase64(data.picture);
 
-    addHookForm({ ...data, picture: base64 });
+    if (!countries.includes(data.country)) {
+      addCountry([...countries, data.country]);
+    }
+
+    addForm({ ...data, picture: base64 });
     onSuccess();
   };
 

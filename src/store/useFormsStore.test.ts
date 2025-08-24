@@ -21,13 +21,13 @@ describe('useFormsStore', () => {
     };
 
     act(() => {
-      result.current.addUncontrolledForm(mockForm);
+      result.current.addForm(mockForm);
     });
     expect(result.current.forms).toHaveLength(1);
     expect(result.current.forms[0].name).toBe('Anna');
 
     act(() => {
-      result.current.addHookForm({
+      result.current.addForm({
         ...mockForm,
         name: 'Ivan',
         email: 'ivan@ex.ru',
