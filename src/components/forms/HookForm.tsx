@@ -139,6 +139,7 @@ export default function HookForm({ onSuccess }: Props) {
             <>
               <input
                 type="file"
+                id="picture"
                 accept="image/png, image/jpeg"
                 onChange={(e) => field.onChange(e.target.files?.[0])}
               />
