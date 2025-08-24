@@ -2,5 +2,38 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
   text-align: center;
+}
+
+.card_wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  min-height: calc(100vh - 170px);
+  gap: 2rem;
+  padding: 1rem;
+}
+
+.red {
+  text-align: end;
+  color: #ef4444;
+  margin: 0;
+  height: 1.5rem;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.label {
+  padding-right: 1rem;
+  min-width: 70px;
 }
