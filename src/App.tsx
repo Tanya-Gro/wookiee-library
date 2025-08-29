@@ -1,22 +1,30 @@
 import { useState } from 'react';
 import { useFormsStore } from '@/store/useFormsStore';
+
 import Card from './components/card/Card';
 import Modal from '@/components/modal/Modal';
 import HookForm from '@/components/forms/HookForm';
 import UncontrolledForm from '@/components/forms/UncontrolledForm';
+
 import '@/App.css';
 
+type FormType = 'controlled' | 'uncontrolled';
+
 function App() {
-  const [isControlled, setIsControlled] = useState<boolean | null>(null);
+  const [formType, setFormType] = useState<FormType | null>(null);
   const { forms } = useFormsStore();
-  const handleCloseModal = () => setIsControlled(null);
+
+  const handleCloseModal = () => setFormType(null);
+
   return (
     <>
       <header>
-        <button onClick={() => setIsControlled(false)}>
+        <button onClick={() => setFormType('uncontrolled')}>
           Uncontrolled Form
         </button>
-        <button onClick={() => setIsControlled(true)}>Controlled Form</button>
+        <button onClick={() => setFormType('controlled')}>
+          Controlled Form
+        </button>
       </header>
       <main>
         <div className="card_wrapper">
@@ -25,13 +33,13 @@ function App() {
           ))}
         </div>
 
-        {isControlled === false && (
+        {formType === 'uncontrolled' && (
           <Modal onClose={handleCloseModal}>
             <UncontrolledForm onSuccess={handleCloseModal} />
           </Modal>
         )}
 
-        {isControlled === true && (
+        {formType === 'controlled' && (
           <Modal onClose={handleCloseModal}>
             <HookForm onSuccess={handleCloseModal} />
           </Modal>
