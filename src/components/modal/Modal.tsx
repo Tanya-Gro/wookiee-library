@@ -10,11 +10,11 @@ type Props = {
 
 export default function Modal({ onClose, children }: Props) {
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
+    const handleClose = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
+    document.addEventListener('keydown', handleClose);
+    return () => document.removeEventListener('keydown', handleClose);
   }, [onClose]);
 
   return createPortal(
