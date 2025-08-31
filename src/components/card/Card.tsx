@@ -1,4 +1,5 @@
 import type { Data } from '@/schemas/types';
+
 import styles from './Card.module.css';
 
 type Props = {
@@ -30,7 +31,7 @@ export default function Card({
         {picture ? (
           <img src={picture} alt="Preview" className={styles.preview} />
         ) : (
-          ' none'
+          'none'
         )}
       </p>
     </div>

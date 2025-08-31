@@ -25,6 +25,8 @@ export default function HookForm({ onSuccess }: Props) {
   const onSubmit = async (data: FormValues) => {
     const base64 = await toBase64(data.picture);
 
+    data.country = data.country[0].toUpperCase() + data.country.slice(1);
+
     if (!countries.includes(data.country)) {
       addCountry([...countries, data.country]);
     }

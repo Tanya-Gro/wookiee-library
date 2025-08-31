@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { useFormsStore } from './useFormsStore';
+import { COUNTRIES, useFormsStore } from './useFormsStore';
+
 import type { Data } from '@/schemas/types';
 
 describe('useFormsStore', () => {
@@ -8,7 +8,7 @@ describe('useFormsStore', () => {
     const { result } = renderHook(() => useFormsStore());
 
     expect(result.current.forms).toEqual([]);
-    expect(result.current.countries).toEqual([]);
+    expect(result.current.countries).toEqual(COUNTRIES);
 
     const mockForm: Data = {
       name: 'Anna',

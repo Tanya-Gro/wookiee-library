@@ -49,6 +49,8 @@ export default function UncontrolledForm({ onSuccess }: Props) {
 
     setErrors(undefined);
     const base64 = await toBase64(file);
+
+    data.country = data.country[0].toUpperCase() + data.country.slice(1);
     addForm({ ...data, picture: base64 });
 
     if (!countries.includes(data.country)) {
@@ -56,7 +58,6 @@ export default function UncontrolledForm({ onSuccess }: Props) {
     }
 
     onSuccess();
-    e.currentTarget.reset();
   };
 
   const getError = (field: string) =>
