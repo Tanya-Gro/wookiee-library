@@ -15,6 +15,7 @@ export default function HookForm({ onSuccess }: Props) {
     register,
     control,
     handleSubmit,
+    setError,
     formState: { errors, isValid },
   } = useForm<FormValues>({
     resolver: zodResolver(formDataSchema),
@@ -23,7 +24,17 @@ export default function HookForm({ onSuccess }: Props) {
   });
 
   const onSubmit = async (data: FormValues) => {
-    const base64 = await toBase64(data.picture);
+    let base64: string;
+
+    try {
+      base64 = await toBase64(data.picture);
+    } catch {
+      setError('picture', {
+        type: 'manual',
+        message: 'Failed to process file. Please select another one.',
+      });
+      return;
+    }
 
     data.country = data.country[0].toUpperCase() + data.country.slice(1);
 

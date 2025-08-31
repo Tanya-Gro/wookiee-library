@@ -47,8 +47,21 @@ export default function UncontrolledForm({ onSuccess }: Props) {
       return;
     }
 
+    let base64: string;
+    try {
+      base64 = await toBase64(file);
+    } catch {
+      setErrors([
+        {
+          code: 'custom',
+          message: 'Failed to process file. Please select another one.',
+          path: ['picture'],
+        },
+      ]);
+      return;
+    }
+
     setErrors(undefined);
-    const base64 = await toBase64(file);
 
     data.country = data.country[0].toUpperCase() + data.country.slice(1);
     addForm({ ...data, picture: base64 });
