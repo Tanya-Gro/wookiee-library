@@ -11,22 +11,22 @@ export default function Card({
 }: Props) {
   return (
     <div className={styles.card}>
-      <p className={styles.p}>
+      <p>
         <strong>Name:</strong> {name}
       </p>
-      <p className={styles.p}>
+      <p>
         <strong>Age:</strong> {age} years
       </p>
-      <p className={styles.p}>
+      <p>
         <strong>Email:</strong> {email}
       </p>
-      <p className={styles.p}>
+      <p>
         <strong>Gender:</strong> {gender}
       </p>
-      <p className={styles.p}>
+      <p>
         <strong>Country:</strong> {country}
       </p>
-      <p className={styles.p}>
+      <p>
         <strong>Picture:</strong>
         {picture ? (
           <img src={picture} alt="Preview" className={styles.preview} />

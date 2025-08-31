@@ -17,23 +17,3 @@
   gap: 2rem;
   padding: 1rem;
 }
-
-.red {
-  text-align: end;
-  color: #ef4444;
-  margin: 0;
-  height: 1.5rem;
-  margin-right: 0;
-  margin-left: auto;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.label {
-  padding-right: 1rem;
-  min-width: 70px;
-}

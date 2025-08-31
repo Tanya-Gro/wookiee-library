@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { ZodError } from 'zod';
+
 import { useFormsStore } from '@/store/useFormsStore';
 import { formDataSchema, type FormValues } from '@/schemas/schemas';
 import { toBase64 } from '@/helpers/toBase64';
-import { ZodError } from 'zod';
+
 import styles from './Forms.module.css';
 
 type Props = {
@@ -23,13 +25,6 @@ export default function UncontrolledForm({ onSuccess }: Props) {
       e.currentTarget.elements.namedItem('picture') as HTMLInputElement
     ).files?.[0];
 
-    if (!file) {
-      setErrors([
-        { code: 'custom', message: 'File is required', path: ['picture'] },
-      ]);
-      return;
-    }
-
     const data: FormValues = {
       name: formData.get('name') as string,
       age: Number(formData.get('age')),
@@ -37,13 +32,17 @@ export default function UncontrolledForm({ onSuccess }: Props) {
       password: formData.get('password') as string,
       gender: formData.get('gender') as 'male' | 'female',
       country: formData.get('country') as string,
-      picture: file,
+      picture: file as File,
     };
 
     const result = formDataSchema.safeParse(data);
 
     if (!result.success) {
       setErrors(result.error.issues);
+      return;
+    }
+
+    if (!file) {
       return;
     }
 
@@ -74,84 +73,61 @@ export default function UncontrolledForm({ onSuccess }: Props) {
   };
 
   const getError = (field: string) =>
-    errors?.find((issue) => issue.path[0] === field)?.message;
+    errors?.find((issue) => issue.path[0] === field)?.message || '';
 
   return (
     <form onSubmit={handleSubmit} className={styles.form} data-testid="form">
       <div>
-        <div className="row">
-          <label htmlFor="name" className="label">
-            Name:
-          </label>
-          <input id="name" name="name" type="text" className={styles.input} />
+        <div className={styles.row}>
+          <label htmlFor="name">Name:</label>
+          <input id="name" name="name" type="text" />
         </div>
-        <p className="red">{getError('name') || ''}</p>
+        <p className={styles.error}>{getError('name')}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="age" className="label">
-            Age:
-          </label>
-          <input id="age" name="age" type="number" className={styles.input} />
+        <div className={styles.row}>
+          <label htmlFor="age">Age:</label>
+          <input id="age" name="age" type="number" />
         </div>
-        <p className="red">{getError('age') || ''}</p>
+        <p className={styles.error}>{getError('age')}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="email" className="label">
-            Email:
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            className={styles.input}
-          />
+        <div className={styles.row}>
+          <label htmlFor="email">Email:</label>
+          <input id="email" name="email" />
         </div>
-        <p className="red">{getError('email') || ''}</p>
+        <p className={styles.error}>{getError('email')}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="password" className="label">
-            Password:
-          </label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            className={styles.input}
-          />
+        <div className={styles.row}>
+          <label htmlFor="password">Password:</label>
+          <input id="password" name="password" type="password" />
         </div>
-        <p className="red">{getError('password') || ''}</p>
+        <p className={styles.error}>{getError('password')}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="gender" className="label">
-            Gender:
-          </label>
-          <select id="gender" name="gender" className={styles.input}>
+        <div className={styles.row}>
+          <label htmlFor="gender">Gender:</label>
+          <select id="gender" name="gender">
             <option value="male">Male</option>
             <option value="female">Female</option>
           </select>
         </div>
-        <p className="red">{getError('gender') || ''}</p>
+        <p className={styles.error}>{getError('gender')}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="country" className="label">
-            Country:
-          </label>
+        <div className={styles.row}>
+          <label htmlFor="country">Country:</label>
           <input
             id="country"
             name="country"
             type="text"
             list="countries"
-            className={styles.input}
             autoComplete="on"
           />
           <datalist id="countries">
@@ -160,20 +136,18 @@ export default function UncontrolledForm({ onSuccess }: Props) {
             ))}
           </datalist>
         </div>
-        <p className="red">{getError('country') || ''}</p>
+        <p className={styles.error}>{getError('country')}</p>
       </div>
 
-      <div className="row">
-        <label htmlFor="picture" className="label">
-          Picture:
-        </label>
+      <div className={styles.row}>
+        <label htmlFor="picture">Picture:</label>
         <input
           id="picture"
           name="picture"
           type="file"
           accept="image/png,image/jpeg"
         />
-        <p className="red">{getError('picture') || ''}</p>
+        <p className={styles.error}>{getError('picture')}</p>
       </div>
 
       <button type="submit">Submit</button>

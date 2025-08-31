@@ -1,8 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm, Controller } from 'react-hook-form';
+
 import { useFormsStore } from '@/store/useFormsStore';
 import { formDataSchema, type FormValues } from '@/schemas/schemas';
 import { toBase64 } from '@/helpers/toBase64';
+
 import styles from './Forms.module.css';
 
 type Props = {
@@ -49,88 +51,67 @@ export default function HookForm({ onSuccess }: Props) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <div>
-        <div className="row">
-          <label htmlFor="name" className="label">
-            Name:
-          </label>
-          <input
-            id="name"
-            {...register('name')}
-            className={styles.input}
-            autoComplete="given-name"
-          />
+        <div className={styles.row}>
+          <label htmlFor="name">Name:</label>
+          <input id="name" {...register('name')} autoComplete="given-name" />
         </div>
-        <p className="red">{errors.name?.message || ''}</p>
+        <p className={styles.error}>{errors.name?.message || ''}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="age" className="label">
-            Age:
-          </label>
+        <div className={styles.row}>
+          <label htmlFor="age">Age:</label>
           <input
             id="age"
             type="number"
             {...register('age', { valueAsNumber: true })}
-            className={styles.input}
             autoComplete="given-age"
           />
         </div>
-        <p className="red">{errors.age?.message || ''}</p>
+        <p className={styles.error}>{errors.age?.message || ''}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="email" className="label">
-            Email:
-          </label>
+        <div className={styles.row}>
+          <label htmlFor="email">Email:</label>
           <input
             id="email"
             type="email"
             {...register('email')}
-            className={styles.input}
             autoComplete="given-email"
           />
         </div>
-        <p className="red">{errors.email?.message || ''}</p>
+        <p className={styles.error}>{errors.email?.message || ''}</p>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="password" className="label">
-            Password:
-          </label>
+        <div className={styles.row}>
+          <label htmlFor="password">Password:</label>
           <input
             id="password"
             type="password"
             {...register('password')}
-            className={styles.input}
             autoComplete="given-password"
           />
         </div>
-        <p className="red">{errors.password?.message || ''}</p>
+        <p className={styles.error}>{errors.password?.message || ''}</p>
       </div>
 
-      <div className="row">
-        <label htmlFor="gender" className="label">
-          Gender:
-        </label>
-        <select id="gender" {...register('gender')} className={styles.input}>
+      <div className={styles.row}>
+        <label htmlFor="gender">Gender:</label>
+        <select id="gender" {...register('gender')}>
           <option value="male">Male</option>
           <option value="female">Female</option>
         </select>
       </div>
 
       <div>
-        <div className="row">
-          <label htmlFor="country" className="label">
-            Country:
-          </label>
+        <div className={styles.row}>
+          <label htmlFor="country">Country:</label>
           <input
             id="country"
             list="countries"
             {...register('country')}
-            className={styles.input}
             autoComplete="given-country"
           />
           <datalist id="countries">
@@ -139,13 +120,11 @@ export default function HookForm({ onSuccess }: Props) {
             ))}
           </datalist>
         </div>
-        <p className="red">{errors.country?.message || ''}</p>
+        <p className={styles.error}>{errors.country?.message || ''}</p>
       </div>
 
-      <div className="row">
-        <label htmlFor="picture" className="label">
-          Picture:
-        </label>
+      <div className={styles.row}>
+        <label htmlFor="picture">Picture:</label>
         <Controller
           control={control}
           name="picture"
@@ -161,7 +140,7 @@ export default function HookForm({ onSuccess }: Props) {
                 onChange={(e) => field.onChange(e.target.files?.[0])}
               />
               {fieldState.error && (
-                <p className="red">{fieldState.error.message}</p>
+                <p className={styles.error}>{fieldState.error.message}</p>
               )}
             </>
           )}
